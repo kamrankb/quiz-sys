@@ -4,9 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Permission\Traits\HasRoles;
 
-class SocialLinks extends Model
+class QuizModel extends Model
 {
-    use HasFactory,HasRoles;
+    use HasFactory;
 }

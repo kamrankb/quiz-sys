@@ -41,6 +41,11 @@ class HomeController extends Controller
 
     public function dashboard(Request $request)
     {
+        $teachers = User::role(['Teacher'])->get();
+        $students = User::role(['Student'])->get();
+
+        return view('admin.index', compact('teachers', 'students'));
+
         if(Auth::user()->hasRole('Salesperson')) {
             
             $salespersonid = Auth::user()->id;

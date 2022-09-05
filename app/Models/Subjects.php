@@ -7,9 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Briefs extends Model
+class Subjects extends Model
 {
-    use HasFactory,HasRoles,SoftDeletes;
-    
-    protected $table = 'briefs';
+    use HasFactory, HasRoles, SoftDeletes;
+
 }

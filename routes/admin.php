@@ -6,15 +6,13 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\controllers\Auth\LoginController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProductBundlesController;
 use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\SubCategoriesController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\BrandSettingsController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\QuizController;
 
 Route::get('/admin', function () {
     return redirect()->route('login');
@@ -93,57 +91,21 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/categories-api', 'CategoryApi');
     });
 
-
-    // subcategories
-    Route::controller(SubCategoriesController::class)->group(function () {
-
-        Route::get('/sub-category/list', 'index')->name('sub-category.list');
-        Route::get('/sub-category/trash', 'trashed')->name('sub-category.list.trashed');
-        Route::get('/sub-category/add', 'form')->name('sub-category.add');
-        Route::get('/sub-category/edit/{id}', 'edit')->name('sub-category.edit');
-        Route::post('/sub-category/detail/{isTrashed?}', 'view')->name('sub-category.detail.view');
-        Route::post('/sub-category/store', 'store')->name('sub-category.store');
-        Route::post('/sub-category/edit', 'update')->name('sub-category.update');
-        Route::post('/sub-category/status/{id}', 'status')->name('sub-category.status');
-        Route::get('/sub-category/api/{id?}', 'SubCategoryApi')->name('subcategory.api');
-        Route::post('/sub-category/remove', 'delete')->name('sub-category.remove');
-        Route::get('/sub-category/restore/{id}', 'restore')->name('sub-category.restore');
-        Route::post('/sub-category/delete', 'destroy')->name('sub-category.delete');
-    });
-
-    // products
-    Route::controller(ProductController::class)->group(function () {
-
-        Route::get('/product/list', 'index')->name('product.list');
-        Route::get('/product/trash', 'trashed')->name('product.list.trashed');
-        Route::get('/product/add', 'form')->name('product.add');
-        Route::get('/product/edit/{id}', 'edit')->name('product.edit');
-        Route::post('/product/detail/{isTrashed?}', 'view')->name('product.detail.view');
-        Route::post('/product/remove', 'delete')->name('product.remove');
-        Route::get('/product/restore/{id}', 'restore')->name('product.restore');
-        Route::get('/product/api/{id?}', 'ProductApi')->name('product.api');
-        Route::post('/product/status/{id}', 'status')->name('product.status');
-        Route::post('/product/store', 'store')->name('product.store');
-        Route::post('/product/edit', 'update')->name('product.update');
-        Route::post('/product/delete', 'destroy')->name('product.delete');
-    });
-
-    // Product Bundles
-    Route::controller(ProductBundlesController::class)->group(function () {
-
-        Route::get('/product-bundle/list', 'index')->name('product-bundle.list');
-        Route::get('/product-bundle/trash', 'trashed')->name('product-bundle.list.trashed');
-        Route::get('/product-bundle/add', 'form')->name('product-bundle.add');
-        Route::get('/product-bundle/edit/{id}', 'edit')->name('product-bundle.edit');
-        Route::post('/product-bundle/detail/{isTrashed?}', 'view')->name('product-bundle.detail.view');
-        Route::post('/products-display/{isType?}', 'ProductDisplay')->name('product-display.view');
-        Route::post('/product-bundle/remove', 'delete')->name('product-bundle.remove');
-        Route::get('/product-bundle/restore/{id}', 'restore')->name('product-bundle.restore');
-        Route::post('/product-bundle/status/{id}', 'status')->name('product-bundle.status');
-        Route::post('/product-bundle/store', 'store')->name('product-bundle.store');
-        Route::get('/product-bundle/api/{id?}', 'ProductBundlesApi')->name('product-bundle.api');
-        Route::post('/product-bundle/edit', 'update')->name('product-bundle.update');
-        Route::post('/product-bundle/delete', 'destroy')->name('product-bundle.delete');
+    // Quiz
+    Route::controller(QuizController::class)->group(function () {
+        Route::get('/category/list', 'index')->name('quiz.list');
+        Route::get('/category/trash', 'trashed')->name('categories.list.trashed');
+        Route::post('/category/detail/{isTrashed?}', 'view')->name('categories.detail.view');
+        Route::get('/category/restore/{id}', 'restore')->name('categories.restore');
+        Route::get('/category/add', 'form')->name('quiz.add');
+        Route::post('/category/save', 'store')->name('categories.save');
+        Route::get('/category/edit/{id}', 'edit')->name('categories.edit');
+        Route::post('/category/remove', 'delete')->name('categories.remove');
+        Route::get('/category/view/', 'view')->name('categories.view');
+        Route::post('/category/update', 'update')->name('categories.update');
+        Route::post('/category/delete', 'destroy')->name('categories.delete');
+        Route::post('/category/status/{id}', 'status')->name('categories.status');
+        Route::get('/categories-api', 'CategoryApi');
     });
 
     // roles
@@ -197,12 +159,5 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/brand-settings/theme-save', 'themestore')->name('admin-brand-settings.theme-save');
         Route::get('/brand-settings/contact-information', 'contactinformationform')->name('admin-brand-settings-contact-information-form');
         Route::post('/brand-settings/contact-information-save', 'contactinformationstore')->name('admin-brand-settings.contact-information-save');;
-        Route::get('/brand-settings/social-link', 'sociallinkform')->name('admin-brand-settings-social-link-form');
-        Route::post('/brand-settings/social-link-save', 'sociallinkstore')->name('admin-brand-settings.social-link-save');
-        Route::get('/brand-settings/custom-header-footer', 'customheaderfooterform')->name('admin-brand-settings-custom-header-footer-form');
-        Route::post('/brand-settings/custom-header-footer-save', 'customheaderfooterstore')->name('admin-brand-settings.custom-header-footer-save');
-        Route::get('/brand-settings/mail-setting', 'mailsettingform')->name('admin-brand-settings-mail-setting-form');
-        Route::post('/brand-settings/mailsetting-save', 'mailsettingstore')->name('admin-brand-settings.mailsetting-save');
-        Route::post('/brand-settings/mailsetting-update', 'mailSettingUpdate')->name('admin-brand-settings.mailsetting-update');
     });
 });

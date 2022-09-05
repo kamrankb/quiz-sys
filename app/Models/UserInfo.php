@@ -11,16 +11,6 @@ class UserInfo extends Model
 {
     use HasFactory;
 
-    // public static function getKeyvalueAttribute($value)
-    // {
-
-    //     $data = json_decode($value);
-    //     $formData = Arr::pluck($data, 'value', 'name');
-
-    //     return json_encode($formData);
-
-    // }
-
     public function userInfos(){
         return $this->belongsTo(User::class, 'user_id', 'id');
     }

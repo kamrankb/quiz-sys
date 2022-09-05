@@ -4,35 +4,34 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Categories;
-use App\Models\SubCategories;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Response;
 use App\Models\User;
 use Illuminate\Support\Str;
 use App\Models\Pages;
+use App\Models\Subjects;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\QuickNotify;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Claims\Subject;
 
-
-class CategoriesController extends Controller
+class SubjectsController extends Controller
 {
     function __construct()
     {
-        $this->categoriesimagepath= 'img/categories/';
-        $this->middleware('permission:Categories-Create|Categories-Edit|Categories-View|Categories-Delete', ['only' => ['index','store']]);
-        $this->middleware('permission:Categories-Create', ['only' => ['form','store']]);
-        $this->middleware('permission:Categories-Edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:Categories-Delete', ['only' => ['destroy']]);
+        $this->middleware('permission:Subjects-Create|Subjects-Edit|Subjects-View|Subjects-Delete', ['only' => ['index','store']]);
+        $this->middleware('permission:Subjects-Create', ['only' => ['form','store']]);
+        $this->middleware('permission:Subjects-Edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:Subjects-Delete', ['only' => ['destroy']]);
     }
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $categories = Categories::all();
-            return DataTables::of($categories)
+            $subjects = Subjects::all();
+            return DataTables::of($subjects)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $html = '<button href="#"  class="btn btn-primary btn-view"  data-bs-toggle="modal" data-bs-target=".orderdetailsModal" data-id="'.$row->id.'"><i class="far fa-eye"></i></button>&nbsp' ;
@@ -62,18 +61,18 @@ class CategoriesController extends Controller
 
         }
 
-        return view('admin.categories.list');
+        return view('admin.subjects.list');
     }
+
     public function form($id = 0)
     {
-        $pages = Pages::all();
-        return view('admin.categories.form', compact('pages'));
+        return view('admin.subjects.form');
 
     }
 
     public function status(Request $request ,$id)
     {
-        $category = Categories::find($id);
+        $category = Subjects::find($id);
         $category->active = (($request->status == "true") ? 1 : 0);
 
         $response = array();
@@ -99,7 +98,7 @@ class CategoriesController extends Controller
         ]);
         if($valid)
         {
-          $categories = new Categories();
+          $categories = new Subjects();
           $categories->name = $request->input('name');
           $categories->title = $request->input('title');
           $categories->description = strip_tags($request->description);
@@ -145,11 +144,10 @@ class CategoriesController extends Controller
     }
     public function edit(Request $request,$id)
     {
-        $pages = Pages::all();
         $where = array('id' => $request->id);
-        $categories  = Categories::where($where)->first();
+        $categories  = Subjects::where($where)->first();
 
-        return view('admin.categories.edit',compact('pages','categories'));
+        return view('admin.categories.edit',compact('categories'));
     }
 
     public function view(Request $request, $isTrashed=null)
@@ -157,9 +155,9 @@ class CategoriesController extends Controller
         $where = array('id' => $request->id);
 
         if($isTrashed!=null) {
-            $contactqueries = Categories::onlyTrashed()->where($where)->first();
+            $contactqueries = Subjects::onlyTrashed()->where($where)->first();
         } else {
-            $contactqueries = Categories::where($where)->first();
+            $contactqueries = Subjects::where($where)->first();
         }
 
         return Response::json($contactqueries);
@@ -174,32 +172,20 @@ class CategoriesController extends Controller
             'description' => 'nullable',
         ]);
 
-        if($valid)
-        {
-          $categories = Categories::find($request->id);
-          $categories->name = $request->input('name');
-          $categories->title = $request->input('title');
-          $categories->description = strip_tags($request->description);
-        //   $categories->metatitle = $request->input('metatitle');
-        //   $categories->metadesc = $request->input('metadesc');
-        //   $categories->metakeyword = $request->input('metakeyword');
-          if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imagename = time() . '.' . $image->getClientOriginalExtension();
-            $image_destinationPath = public_path($this->categoriesimagepath);
-            $image->move($image_destinationPath, $imagename);
-            $imagename = $this->categoriesimagepath . $imagename;
-            $categories->image = $imagename;
-           }
-
-           $management = User::role(['Admin', 'Brand Manager'])->get();
+        if($valid) {
+          $subjects = Subjects::find($request->id);
+          $subjects->name = $request->input('name');
+          $subjects->title = $request->input('title');
+          $subjects->description = strip_tags($request->description);
+          
+           $management = User::role(['Admin'])->get();
            $management->pluck('id');
            $data = array(
             "success"=> true,
             "message" => "Category Updated Successfully"
            );
 
-           if($categories->save()) {
+           if($subjects->save()) {
             $notify = array(
                 "performed_by" => Auth::user()->id,
                 "title" => "Category Updated Successfully",
@@ -218,15 +204,14 @@ class CategoriesController extends Controller
         }
 
          return redirect()->route('categories.list')->with($data);
-        }
-        else {
+        } else {
            return redirect()->back();
         }
     }
 
     public function restore(Request $request ,$id)
     {
-        $Contactqueries = Categories::withTrashed()->find($id);
+        $Contactqueries = Subjects::withTrashed()->find($id);
         $response = array(
             "success" => true,
             "message" => "Category Restored Successfully!"
@@ -242,7 +227,7 @@ class CategoriesController extends Controller
 
     public function destroy(Request $request)
     {
-        $subscriber = Categories::onlyTrashed()->find($request->id);
+        $subscriber = Subjects::onlyTrashed()->find($request->id);
 
         $response = array(
             "success" => true,
@@ -260,7 +245,7 @@ class CategoriesController extends Controller
 
     public function delete(Request $request)
     {
-        $category = Categories::find($request->id);
+        $category = Subjects::find($request->id);
         $response = array(
             "success" => true,
             "message" => "Category deleted Successfully!"
@@ -277,13 +262,13 @@ class CategoriesController extends Controller
     public function trashed(Request $request)
     {
         if ($request->ajax()) {
-            $subscriber = Categories::onlyTrashed();
+            $subscriber = Subjects::onlyTrashed();
             return DataTables::of($subscriber)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $html = '<button href="#"  class="btn btn-primary btn-view"  data-bs-toggle="modal" data-bs-target=".orderdetailsModal" data-id="'.$row->id.'"><i class="far fa-eye"></i></button>&nbsp' ;
                     if (Auth::user()->can('Subscriber-Edit')) {
-                        $html .= '<a href="'.route('categories.restore',$row->id).'"  class="btn btn-success btn-restore" ><i class="mdi mdi-delete-restore"></i></a>&nbsp' ;
+                        $html .= '<a href="'.route('subjects.restore',$row->id).'"  class="btn btn-success btn-restore" ><i class="mdi mdi-delete-restore"></i></a>&nbsp' ;
                     }
                     if (Auth::user()->can('Subscriber-Delete')) {
                         $html .= '<button data-id="' . $row->id . '" id="sa-params" class="btn btn-xs  btn-danger btn-delete" ><i class="far fa-trash-alt"></i></button>&nbsp';
@@ -308,12 +293,12 @@ class CategoriesController extends Controller
 
         }
 
-        return view('admin.categories.trashed');
+        return view('admin.subjects.trashed');
     }
 
-    public function CategoryApi()
+    public function subjectApi()
     {
-        $categories = Categories::all();
-        return response()->json($categories);
+        $subjects = Subjects::all();
+        return response()->json($subjects);
     }
 }
