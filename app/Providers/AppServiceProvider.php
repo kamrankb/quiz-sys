@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Models\BrandSettings;
-use App\Models\CountryCurrencies;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
@@ -41,7 +40,6 @@ class AppServiceProvider extends ServiceProvider
                 "company_name" => BrandSettings::where("key_name", '=', "company_name")->first(),
                 "company_email" => BrandSettings::where("key_name", '=', "company_email")->first(),
                 "company_number" => BrandSettings::where("key_name", '=', "company_phone")->first(),
-                "country_currency" => CountryCurrencies::where("aplha_code2", '=', "US")->first(),
                 "company_address" => BrandSettings::where("key_name", '=', "company_address")->first(),
                 "custom_footer" => BrandSettings::where("key_name", '=', "customfooter")->first(),
             );

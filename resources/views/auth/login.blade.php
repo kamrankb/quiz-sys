@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Testing Platform</title>
+    <title>{{env('APP_NAME')}}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -29,17 +29,33 @@
                   <div class="login-signup-box">
                     <h1>Login</h1>
                     
-                    <form action="dashboard.html">
+                    <form action="{{ route('login') }}" method="POST">
                       <div class="form-input-container">
                         <label>Email*</label>
-                        <input type="email" placeholder="mail@website.com" class="form-input" required>
+                        <input type="email" name="email" placeholder="hello@quiz.com" class="form-input" required>
+                        @error('email')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                        @enderror
                       </div>
                       <div class="form-input-container">
                         <label>Password*</label>
-                        <input type="password" placeholder="Min. 8 characters" class="form-input" required>
+                        <input type="password" name="password" placeholder="Min. 8 characters" class="form-input" required>
+                        @error('password')
+                          <span class="invalid-feedback" role="alert">
+                              <strong>{{ $message }}</strong>
+                          </span>
+                        @enderror
                       </div>
                       <div class="form-input-container">
+                        @csrf
                         <input type="submit" value="Login" class="form-btn">
+                        @if(session()->has('message'))
+                          <div class="alert alert-danger mt-3">
+                              {{ session()->get('message') }}
+                          </div>
+                      @endif
                       </div>
                     </form>
                     <p class="not-user-text">Not A User Yet? <a href="register.html">Register Now!</a></p>
