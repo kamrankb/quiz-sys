@@ -33,6 +33,7 @@ class UserController extends Controller
         $this->middleware('permission:User-Edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:User-Delete', ['only' => ['destroy']]);
     }
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -41,8 +42,6 @@ class UserController extends Controller
                 ->addColumn('action', function ($row) {
 
                     $html = ' <a href="#" class="btn btn-primary viewModal"  data-bs-toggle="modal" data-bs-target=".userDetailsModal" data-id="' . $row->id . '"><i title="View" class="fas fa-eye"></i></a>&nbsp';
-
-
                     $html .= '<a href="' . route('user.edit', $row->id) . '"  class="btn btn-success btn-edit" ><i class="fas fa-edit"></i></a>&nbsp';
 
                     if (Auth::user()->can('User-Delete')) {
@@ -80,6 +79,7 @@ class UserController extends Controller
                 })->rawColumns(['action', 'roles', 'image', 'created_at', 'status', 'created_by_name'])->make(true);
         }
         $roles = Role::pluck('name', 'name')->all();
+
         return view('admin.users.list', compact('roles'));
     }
 
@@ -91,17 +91,10 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        Validator::extend('without_spaces', function($attr, $value){
-            return preg_match('/^\S*$/u', $value);
-        });
-
         $this->validate($request, [
             'roles' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
-        ],
-        [
-            'key_name.without_spaces' => 'Whitespace not allowed.'
         ]);
 
         $user = new User();
@@ -114,6 +107,7 @@ class UserController extends Controller
         $user->created_at = Carbon::now();
         $user->created_by = Auth::user()->id;
         $user->password = Hash::make($request->password);
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imagename = time() . '.' . $image->getClientOriginalExtension();
@@ -122,111 +116,27 @@ class UserController extends Controller
             $imagename = $this->userimagepath . $imagename;
             $user->image = $imagename;
         }
-        $user->user_target = $request->sale_target;
-
-
-        $management = User::role(['Admin', 'Brand Manager'])->get();
+        $management = User::role(['Admin', 'Teacher'])->get();
         $management->pluck('id');
-        if($user->save())
-        {
-            if (!empty($request->alias_name)) {
-                $alias_name = UserInfo::where('user_id' , $request->id)->where("key_name", '=', "alias_name")->with('userInfos')->first();
 
-                if ($alias_name) {
-                    $alias_name = UserInfo::find($alias_name->id);
-                    $alias_name->key_name = 'alias_name';
-                    $alias_name->user_id = $user->id;
-                    $alias_name->key_value = $request->alias_name;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
-                    $management->pluck('id');
-                    $alias_name->save();
-
-                    $notify = array(
-                        "performed_by" => Auth::user()->id,
-                        "title" => "Updated Alias Name",
-                        "desc" => array(
-                            "added_title" => $request->input('key_value'),
-                        )
-                    );
-                    Notification::send($management, new QuickNotify($notify));
-                } else {
-                    $alias_name = new UserInfo();
-                    $alias_name->key_name = 'alias_name';
-                    $alias_name->user_id = $user->id;
-                    $alias_name->key_value = $request->alias_name;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
-                    $management->pluck('id');
-                    $alias_name->save();
-
-                    $notify = array(
-                        "performed_by" => Auth::user()->id,
-                        "title" => "Added Alias Name",
-                        "desc" => array(
-                            "added_title" => $request->input('key_value'),
-                        )
-                    );
-                    Notification::send($management, new QuickNotify($notify));
-                }
-            }
-            if (!empty($request->alias_email)) {
-                $alias_email = UserInfo::where('user_id' , $request->id)->where("key_name", '=', "alias_email")->with('userInfos')->first();
-
-                if ($alias_email) {
-                    $alias_email = UserInfo::find($alias_email->id);
-                    $alias_email->key_name = 'alias_email';
-                    $alias_email->user_id = $user->id;
-                    $alias_email->key_value = $request->alias_email;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
-                    $management->pluck('id');
-                    $alias_email->save();
-
-                    $notify = array(
-                        "performed_by" => Auth::user()->id,
-                        "title" => "Updated Alias Email",
-                        "desc" => array(
-                            "added_title" => $request->input('key_value'),
-                        )
-                    );
-                    Notification::send($management, new QuickNotify($notify));
-                } else {
-                    $alias_email = new UserInfo();
-                    $alias_email->key_name = 'alias_email';
-                    $alias_email->user_id = $user->id;
-                    $alias_email->key_value = $request->alias_email;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
-                    $management->pluck('id');
-                    $alias_email->save();
-
-                    $notify = array(
-                        "performed_by" => Auth::user()->id,
-                        "title" => "Added Alias Email",
-                        "desc" => array(
-                            "added_title" => $request->input('key_value'),
-                        )
-                    );
-                    Notification::send($management, new QuickNotify($notify));
-                }
-            }
+        if($user->save()) {
+            $notify = array(
+                "performed_by" => Auth::user()->id,
+                "title" => "Added ".$user->first_name,
+                "desc" => array(
+                    "added_title" => $user->first_name,
+                )
+            );
+            Notification::send($management, new QuickNotify($notify));
+    
+            $user->assignRole($request->roles);
+            
+            return redirect()->route('user.list')->with('success', 'User has been added Successfully.');
         }
 
-        $additional_data = new UserInfo();
-        $additional_data->key_name = 'additional_data';
-        $detailarray = array_values($request->outergroup);
-        $additional_data->key_value = json_encode($detailarray);
-        $additional_data->user_id = $user->id;
-        $additional_data->save();
+        return redirect()->route('user.list')->with('error', 'Failed to add user.');
 
-        $notify = array(
-            "performed_by" => Auth::user()->id,
-            "title" => "Added Key Name",
-            "desc" => array(
-                "added_title" => $request->key_name,
-            )
-        );
-        Notification::send($management, new QuickNotify($notify));
-
-        $user->assignRole($request->roles);
-        return redirect()->route('user.list')->with('success', 'User has been, Added Successfully.');
+        
     }
 
     public function edit(Request $request, $id)

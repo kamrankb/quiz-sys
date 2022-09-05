@@ -84,7 +84,6 @@
                     <ul class="sub-menu mm-collapse" aria-expanded="false">
                         <li>
                         <li><a href="{{ route('admin-brand-settings-general-setting')}}">General Setting</a></li>
-                        <li><a href="{{ route('admin-brand-settings-custom-header-footer-form')}}">Custom Header & Footer</a></li>
                     </ul>
                 </li>
                 @endhasanyrole
