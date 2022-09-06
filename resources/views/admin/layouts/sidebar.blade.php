@@ -46,23 +46,44 @@
                         </ul>
                     </li>
                 @endcan
+                
+                @can('Subject-View','Subject-Create','Subject-Edit','Subject-Delete')
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="fab fa-product-hunt"></i>
+                            <span key="t-tasks">Subject</span>
+                        </a>
+                        <ul class="sub-menu mm-collapse" aria-expanded="false">
+                            @can('Subject-Create')
+                            <li><a href="{{ route('subject.add') }}">Create Subject</a></li>
+                            @endcan
 
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="fab fa-product-hunt"></i>
-                        <span key="t-tasks">Quiz</span>
-                    </a>
-                    <ul class="sub-menu mm-collapse" aria-expanded="false">
-                        @can('Quiz-Add')
-                        <li><a href="{{ route('quiz.add') }}">Create Quiz</a></li>
-                        @endcan
+                            @can('Subject-View')
+                            <li><a href="{{ route('subject.list') }}">Subject List</a></li>
+                            @endcan
 
-                        @can('Quiz-View')
-                        <li><a href="{{ route('quiz.list') }}">Quiz List</a></li>
-                        @endcan
+                        </ul>
+                    </li>
+                @endcan
 
-                    </ul>
-                </li>
+                @can('Quiz-View','Quiz-Create','Quiz-Edit','Quiz-Delete')
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="fab fa-product-hunt"></i>
+                            <span key="t-tasks">Quiz</span>
+                        </a>
+                        <ul class="sub-menu mm-collapse" aria-expanded="false">
+                            @can('Quiz-Create')
+                            <li><a href="{{ route('quiz.add') }}">Create Quiz</a></li>
+                            @endcan
+
+                            @can('Quiz-View')
+                            <li><a href="{{ route('quiz.list') }}">Quiz List</a></li>
+                            @endcan
+
+                        </ul>
+                    </li>
+                @endcan
 
                 @hasanyrole('Admin')
                 <li>

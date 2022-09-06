@@ -15,7 +15,7 @@
                         </div>
                     @endif
                     <h5>Add New Category:</h5>
-                    <form action="{{route('categories.save')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('subject.save')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-sm-8">

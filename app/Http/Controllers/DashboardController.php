@@ -14,7 +14,6 @@ use Faker\Provider\ar_EG\Payment;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
-use App\Traits\ReporthelperTrait;
 use Carbon\CarbonImmutable;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Str;
@@ -22,7 +21,6 @@ use Illuminate\Support\Str;
 
 class DashboardController extends Controller
 {
-    use ReporthelperTrait;
     public $numberOfDays, $currentDay, $currentMonth, $currentYear;
 
     public function __construct()

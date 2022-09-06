@@ -14,11 +14,9 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Notification;
 use PDF;
 use App\Notifications\QuickNotify;
-use App\Traits\ReporthelperTrait;
 
 class HomeController extends Controller
 {
-    use ReporthelperTrait;
     /**
      * Create a new controller instance.
      *

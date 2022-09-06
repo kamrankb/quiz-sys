@@ -21,10 +21,10 @@
             <div class="card-body">
                 @can('Subscriber-Create')
                     <h3>
-                        <a href="{{ route('categories.add') }}" class="btn btn-xs btn-success float-right add">Add
+                        <a href="{{ route('subject.add') }}" class="btn btn-xs btn-success float-right add">Add
                         Category</a>
-                        <a href="{{ route('categories.list') }}" class="btn btn-xs btn-primary">All Category</a>
-                        <a href="{{ route('categories.list.trashed') }}"class="btn btn-xs btn-danger">Trash</a>
+                        <a href="{{ route('subject.list') }}" class="btn btn-xs btn-primary">All Category</a>
+                        <a href="{{ route('subject.list.trashed') }}"class="btn btn-xs btn-danger">Trash</a>
 
                     </h3>
                 @endcan
@@ -156,7 +156,7 @@
                 btnView = $('.btn-view');
 
             var table = $('#category').DataTable({
-                ajax: route('categories.list.trashed'),
+                ajax: route('subject.list.trashed'),
                 serverSide: true,
                 processing: true,
                 aaSorting: [
@@ -178,7 +178,7 @@
             // update ajax
             $(document).on('click', '.btn-view', function() {
                 $.ajax({
-                    url: route('categories.detail.view', ["yes"]),
+                    url: route('subject.detail.view', ["yes"]),
                     type: "post",
                     data: {
                         id: $(this).data('id')
@@ -207,7 +207,7 @@
 
 
                 $.ajax({
-                    url: route('categories.restore'),
+                    url: route('subject.restore'),
                     type: "post",
                     data: {
                         id: $(this).data('id')
@@ -242,7 +242,7 @@
                 var formData = new FormData(this);
                 var updateId = form.find('input[name="id"]').val();
                 $.ajax({
-                    url: route('categories.update'),
+                    url: route('subject.update'),
                     type: "POST",
                     data: formData,
                     cache: false,
@@ -277,7 +277,7 @@
                     if (t.value) {
                         if (!id) return;
                         $.ajax({
-                            url: route('categories.delete'),
+                            url: route('subject.delete'),
                             type: "POST",
                             data: {
                                 id: id
@@ -318,7 +318,7 @@
                 if (t.value) {
                     if (!id) return;
                     $.ajax({
-                        url: route('categories.status', [id]),
+                        url: route('subject.status', [id]),
                         type: "post",
                         data: {
                             id: id,

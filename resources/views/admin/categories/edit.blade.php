@@ -20,7 +20,7 @@
                         {{ Session::get("error") }}
                         </div>
                     @endif
-                    <form action="{{route('categories.update')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('subject.update')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             <div class="col-sm-8">
@@ -30,8 +30,8 @@
                                         <div class="col-sm-6">
                                             <strong><label for="horizontal-name-input" class="col-sm-3 col-form-label">Name</label></strong>
                                             <div class="col-sm-12">
-                                                <input type="hidden" class="form-control" name="id"  value="{{ !empty($categories->id) ? $categories->id : '' }}">
-                                                <input type="text" class="form-control" name="name" id="horizontal-name-input" placeholder="Enter Name here" value="{{ !empty($categories->name) ? $categories->name : '' }}">
+                                                <input type="hidden" class="form-control" name="id"  value="{{ !empty($subject->id) ? $subject->id : '' }}">
+                                                <input type="text" class="form-control" name="name" id="horizontal-name-input" placeholder="Enter Name here" value="{{ !empty($subject->name) ? $subject->name : '' }}">
                                                 @if ($errors->has('name'))
                                                     <span class="text-danger">{{ $errors->first('name') }}</span>
                                                 @endif
@@ -41,7 +41,7 @@
                                         <div class="col-sm-6">
                                             <strong><label for="horizontal-title-input" class="col-sm-3 col-form-label">Title</label></strong>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" name="title" id="horizontal-title-input" value="{{ !empty($categories->title) ? $categories->title : '' }}" placeholder="Enter Title here">
+                                                <input type="text" class="form-control" name="title" id="horizontal-title-input" value="{{ !empty($subject->title) ? $subject->title : '' }}" placeholder="Enter Title here">
                                                 @if ($errors->has('title'))
                                                     <span class="text-danger">{{ $errors->first('title') }}</span>
                                                 @endif
@@ -52,7 +52,7 @@
                                         <div class="col-sm-12">
                                             <strong><label for="horizontal-desc-input" class="col-sm-3 col-form-label">Description</label></strong>
                                             <div class="col-sm-12">
-                                                <textarea  class="form-control description"  name="description" id="summernote">{{ !empty($categories->description) ? $categories->description : '' }}</textarea>
+                                                <textarea  class="form-control description"  name="description" id="summernote">{{ !empty($subject->description) ? $subject->description : '' }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -69,7 +69,7 @@
                                             <div class="card">
                                             <div class="card-body" style="margin-top: 2%">
                                                 <label for="image">Old Preview Image</label>
-                                                <img  src="{{ (!empty($categories->image) ? asset($categories->image) : asset('backend/assets/img/users/no-image.jpg')) }}" id="edi_image" class="form-control input-sm" width="180px;" height="120" />
+                                                <img  src="{{ (!empty($subject->image) ? asset($subject->image) : asset('backend/assets/img/users/no-image.jpg')) }}" id="edi_image" class="form-control input-sm" width="180px;" height="120" />
                                             </div>
                                             </div>
                                         </div>
@@ -88,7 +88,7 @@
                                                 <div class="col-sm-12">
                                                     <strong><label for="horizontal-metatitle-input" class="col-sm-6 col-form-label">Meta Title</label></strong>
                                                     <div class="col-sm-12">
-                                                        <textarea rows="4" class="form-control"  name="metatitle" id="horizontal-metatitle-input" placeholder="Meta Title">{{ !empty($categories->metatitle) ? $categories->metatitle : ''  }}</textarea>
+                                                        <textarea rows="4" class="form-control"  name="metatitle" id="horizontal-metatitle-input" placeholder="Meta Title">{{ !empty($subject->metatitle) ? $subject->metatitle : ''  }}</textarea>
                                                         @if ($errors->has('metatitle'))
                                                         <span class="text-danger">{{ $errors->first('metatitle') }}</span>
                                                         @endif
@@ -96,7 +96,7 @@
                                                     <br />
                                                     <strong><label for="horizontal-metadesc-input" class="col-sm-6 col-form-label">Meta Description</label></strong>
                                                     <div class="col-sm-12">
-                                                        <textarea rows="4" class="form-control" name="metadesc"  id="metadesc" placeholder="Meta Description">{{ !empty($categories->metadesc) ? $categories->metadesc : ''  }}</textarea>
+                                                        <textarea rows="4" class="form-control" name="metadesc"  id="metadesc" placeholder="Meta Description">{{ !empty($subject->metadesc) ? $subject->metadesc : ''  }}</textarea>
                                                         @if ($errors->has('metadesc'))
                                                         <span class="text-danger">{{ $errors->first('metadesc') }}</span>
                                                         @endif
@@ -104,7 +104,7 @@
                                                     <br />
                                                     <strong><label for="horizontal-metakeyword-input" class="col-sm-6 col-form-label">Meta Keywords</label></strong>
                                                     <div class="col-sm-12">
-                                                        <textarea rows="4" class="form-control" name="metakeyword"  id="horizontal-metakeyword-input" placeholder="Meta Keywords">{{ !empty($categories->metakeyword) ? $categories->metakeyword : ''  }}</textarea>
+                                                        <textarea rows="4" class="form-control" name="metakeyword"  id="horizontal-metakeyword-input" placeholder="Meta Keywords">{{ !empty($subject->metakeyword) ? $subject->metakeyword : ''  }}</textarea>
                                                         @if ($errors->has('metakeyword'))
                                                         <span class="text-danger">{{ $errors->first('metakeyword') }}</span>
                                                         @endif

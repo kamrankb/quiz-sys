@@ -13,6 +13,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\BrandSettingsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\SubjectsController;
 
 Route::get('/admin', function () {
     return redirect()->route('login');
@@ -74,38 +75,38 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/user/additionalpermission/{id}', 'permission_update')->name('admin-user.additionalpermission');
     });
 
-    // categories
-    Route::controller(CategoriesController::class)->group(function () {
-        Route::get('/category/list', 'index')->name('categories.list');
-        Route::get('/category/trash', 'trashed')->name('categories.list.trashed');
-        Route::post('/category/detail/{isTrashed?}', 'view')->name('categories.detail.view');
-        Route::get('/category/restore/{id}', 'restore')->name('categories.restore');
-        Route::get('/category/add', 'form')->name('categories.add');
-        Route::post('/category/save', 'store')->name('categories.save');
-        Route::get('/category/edit/{id}', 'edit')->name('categories.edit');
-        Route::post('/category/remove', 'delete')->name('categories.remove');
-        Route::get('/category/view/', 'view')->name('categories.view');
-        Route::post('/category/update', 'update')->name('categories.update');
-        Route::post('/category/delete', 'destroy')->name('categories.delete');
-        Route::post('/category/status/{id}', 'status')->name('categories.status');
-        Route::get('/categories-api', 'CategoryApi');
+    // subjects
+    Route::controller(SubjectsController::class)->group(function () {
+        Route::get('/subject/list', 'index')->name('subject.list');
+        Route::get('/subject/trash', 'trashed')->name('subject.list.trashed');
+        Route::post('/subject/detail/{isTrashed?}', 'view')->name('subject.detail.view');
+        Route::get('/subject/restore/{id}', 'restore')->name('subject.restore');
+        Route::get('/subject/add', 'form')->name('subject.add');
+        Route::post('/subject/save', 'store')->name('subject.save');
+        Route::get('/subject/edit/{id}', 'edit')->name('subject.edit');
+        Route::post('/subject/remove', 'delete')->name('subject.remove');
+        Route::get('/subject/view/', 'view')->name('subject.view');
+        Route::post('/subject/update', 'update')->name('subject.update');
+        Route::post('/subject/delete', 'destroy')->name('subject.delete');
+        Route::post('/subject/status/{id}', 'status')->name('subject.status');
+        Route::get('/subject-api', 'subjectApi');
     });
 
     // Quiz
     Route::controller(QuizController::class)->group(function () {
-        Route::get('/category/list', 'index')->name('quiz.list');
-        Route::get('/category/trash', 'trashed')->name('categories.list.trashed');
-        Route::post('/category/detail/{isTrashed?}', 'view')->name('categories.detail.view');
-        Route::get('/category/restore/{id}', 'restore')->name('categories.restore');
-        Route::get('/category/add', 'form')->name('quiz.add');
-        Route::post('/category/save', 'store')->name('categories.save');
-        Route::get('/category/edit/{id}', 'edit')->name('categories.edit');
-        Route::post('/category/remove', 'delete')->name('categories.remove');
-        Route::get('/category/view/', 'view')->name('categories.view');
-        Route::post('/category/update', 'update')->name('categories.update');
-        Route::post('/category/delete', 'destroy')->name('categories.delete');
-        Route::post('/category/status/{id}', 'status')->name('categories.status');
-        Route::get('/categories-api', 'CategoryApi');
+        Route::get('/quiz/list', 'index')->name('quiz.list');
+        Route::get('/quiz/trash', 'trashed')->name('quiz.list.trashed');
+        Route::post('/quiz/detail/{isTrashed?}', 'view')->name('quiz.detail.view');
+        Route::get('/quiz/restore/{id}', 'restore')->name('quiz.restore');
+        Route::get('/quiz/add', 'form')->name('quiz.add');
+        Route::post('/quiz/save', 'store')->name('quiz.save');
+        Route::get('/quiz/edit/{id}', 'edit')->name('quiz.edit');
+        Route::post('/quiz/remove', 'delete')->name('quiz.remove');
+        Route::get('/quiz/view/', 'view')->name('quiz.view');
+        Route::post('/quiz/update', 'update')->name('quiz.update');
+        Route::post('/quiz/delete', 'destroy')->name('quiz.delete');
+        Route::post('/quiz/status/{id}', 'status')->name('quiz.status');
+        Route::get('/quiz-api', 'quizApi');
     });
 
     // roles

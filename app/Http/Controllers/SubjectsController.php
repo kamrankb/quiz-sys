@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Categories;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Response;
 use App\Models\User;
@@ -36,7 +35,7 @@ class SubjectsController extends Controller
                 ->addColumn('action', function ($row) {
                     $html = '<button href="#"  class="btn btn-primary btn-view"  data-bs-toggle="modal" data-bs-target=".orderdetailsModal" data-id="'.$row->id.'"><i class="far fa-eye"></i></button>&nbsp' ;
                     if (Auth::user()->can('Subscriber-Edit')) {
-                        $html .= '<a href="'.route('categories.edit',$row->id).'"  class="btn btn-success btn-edit" ><i class="fas fa-edit"></i></a>&nbsp' ;
+                        $html .= '<a href="'.route('subject.edit',$row->id).'"  class="btn btn-success btn-edit" ><i class="fas fa-edit"></i></a>&nbsp' ;
                     }
                     if (Auth::user()->can('Subscriber-Delete')) {
                         $html .= '<button data-id="' . $row->id . '" id="sa-params" class="btn btn-xs  btn-danger btn-delete" ><i class="far fa-trash-alt"></i></button>&nbsp';
@@ -98,20 +97,20 @@ class SubjectsController extends Controller
         ]);
         if($valid)
         {
-          $categories = new Subjects();
-          $categories->name = $request->input('name');
-          $categories->title = $request->input('title');
-          $categories->description = strip_tags($request->description);
-        //   $categories->metatitle = $request->input('metatitle');
-        //   $categories->metadesc = $request->input('metadesc');
-        //   $categories->metakeyword = $request->input('metakeyword');
+          $subject = new Subjects();
+          $subject->name = $request->input('name');
+          $subject->title = $request->input('title');
+          $subject->description = strip_tags($request->description);
+        //   $subject->metatitle = $request->input('metatitle');
+        //   $subject->metadesc = $request->input('metadesc');
+        //   $subject->metakeyword = $request->input('metakeyword');
           if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imagename = time() . '.' . $image->getClientOriginalExtension();
-            $image_destinationPath = public_path($this->categoriesimagepath);
+            $image_destinationPath = public_path($this->subjectimagepath);
             $image->move($image_destinationPath, $imagename);
-            $imagename = $this->categoriesimagepath . $imagename;
-            $categories->image = $imagename;
+            $imagename = $this->subjectimagepath . $imagename;
+            $subject->image = $imagename;
            }
            $management = User::role(['Admin', 'Brand Manager'])->get();
            $management->pluck('id');
@@ -120,7 +119,7 @@ class SubjectsController extends Controller
             "message" => "Category Added Successfully"
            );
 
-           if ($categories->save()) {
+           if ($subject->save()) {
             $notify = array(
                 "performed_by" => Auth::user()->id,
                 "title" => "Added New category",
@@ -136,7 +135,7 @@ class SubjectsController extends Controller
             $data["message"] = "Category Not Added Successfully.";
             Session::flash('error', $data["message"]);
         }
-        return redirect()->route('categories.list')->with($data);
+        return redirect()->route('subject.list')->with($data);
         }
         else {
            return redirect()->back();
@@ -145,9 +144,9 @@ class SubjectsController extends Controller
     public function edit(Request $request,$id)
     {
         $where = array('id' => $request->id);
-        $categories  = Subjects::where($where)->first();
+        $subject  = Subjects::where($where)->first();
 
-        return view('admin.categories.edit',compact('categories'));
+        return view('admin.subject.edit',compact('subject'));
     }
 
     public function view(Request $request, $isTrashed=null)
@@ -203,7 +202,7 @@ class SubjectsController extends Controller
             Session::flash('error', $data["message"]);
         }
 
-         return redirect()->route('categories.list')->with($data);
+         return redirect()->route('subject.list')->with($data);
         } else {
            return redirect()->back();
         }
@@ -222,7 +221,7 @@ class SubjectsController extends Controller
             $response["message"] = "Failed to Restore Category!";
         }
 
-        return redirect()->route('categories.list')->with($response);
+        return redirect()->route('subject.list')->with($response);
     }
 
     public function destroy(Request $request)
