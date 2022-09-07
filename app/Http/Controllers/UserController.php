@@ -194,7 +194,7 @@ class UserController extends Controller
             $user->image = $imagename;
         }
         $user->user_target = $request->sale_target;
-        $management = User::role(['Admin', 'Brand Manager'])->get();
+        $management = User::role(['Admin', 'Teacher'])->get();
         $management->pluck('id');
 
         if($user->save()){
@@ -207,7 +207,7 @@ class UserController extends Controller
                     $alias_name->key_name = 'alias_name';
                     $alias_name->user_id = $user->id;
                     $alias_name->key_value = $request->alias_name;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $alias_name->save();
 
@@ -224,7 +224,7 @@ class UserController extends Controller
                     $alias_name->key_name = 'alias_name';
                     $alias_name->user_id = $user->id;
                     $alias_name->key_value = $request->alias_name;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $alias_name->save();
 
@@ -246,7 +246,7 @@ class UserController extends Controller
                     $alias_email->key_name = 'alias_email';
                     $alias_email->user_id = $user->id;
                     $alias_email->key_value = $request->alias_email;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $alias_email->save();
 
@@ -263,7 +263,7 @@ class UserController extends Controller
                     $alias_email->key_name = 'alias_email';
                     $alias_email->user_id = $user->id;
                     $alias_email->key_value = $request->alias_email;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $alias_email->save();
 

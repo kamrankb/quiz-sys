@@ -176,7 +176,7 @@ class PermissionController extends Controller
             'name' => 'required|unique:permissions,name',
         ]);
 
-        $management = User::role(['Admin', 'Brand Manager'])->get();
+        $management = User::role(['Admin', 'Teacher'])->get();
         $management->pluck('id');
         $data = array(
             "success"=> true,
@@ -211,7 +211,7 @@ class PermissionController extends Controller
 
         $permission = Permission::find($request->id);
         $permission->name = $request->input('name');
-        $management = User::role(['Admin', 'Brand Manager'])->get();
+        $management = User::role(['Admin', 'Teacher'])->get();
         $management->pluck('id');
         $permission->save();
         $data = array(

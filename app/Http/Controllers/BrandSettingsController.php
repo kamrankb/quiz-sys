@@ -82,7 +82,7 @@ class BrandSettingsController extends Controller
                     $image->move($image_destinationPath, $imagename);
                     $imagename = $this->brandsettingsimagepath . $imagename;
                     $logo->key_value = $imagename;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $logo->save();
 
@@ -104,7 +104,7 @@ class BrandSettingsController extends Controller
                     $image->move($image_destinationPath, $imagename);
                     $imagename = $this->brandsettingsimagepath . $imagename;
                     $logo->key_value = $imagename;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $logo->save();
 
@@ -131,7 +131,7 @@ class BrandSettingsController extends Controller
                     $logo->move($image_destinationPath, $imagename);
                     $imagename = $this->brandsettingsimagepath . $imagename;
                     $logo_white->key_value = $imagename;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $logo_white->save();
 
@@ -153,7 +153,7 @@ class BrandSettingsController extends Controller
                     $logo->move($image_destinationPath, $imagename);
                     $imagename = $this->brandsettingsimagepath . $imagename;
                     $logo_white->key_value = $imagename;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $logo_white->save();
 
@@ -180,7 +180,7 @@ class BrandSettingsController extends Controller
                     $image->move($image_destinationPath, $imagename);
                     $imagename = $this->brandsettingsimagepath . $imagename;
                     $favicon->key_value = $imagename;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $favicon->save();
 
@@ -202,7 +202,7 @@ class BrandSettingsController extends Controller
                     $image->move($image_destinationPath, $imagename);
                     $imagename = $this->brandsettingsimagepath . $imagename;
                     $favicon->key_value = $imagename;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $favicon->save();
 
@@ -240,7 +240,7 @@ class BrandSettingsController extends Controller
                     $primary_color = BrandSettings::find($primary_color->id);
                     $primary_color->key_name = 'primary_color';
                     $primary_color->key_value = $request->primary_color;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $primary_color->save();
 
@@ -257,7 +257,7 @@ class BrandSettingsController extends Controller
 
                     $primary_color->key_name = 'primary_color';
                     $primary_color->key_value = $request->primary_color;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $primary_color->save();
 
@@ -279,7 +279,7 @@ class BrandSettingsController extends Controller
                     $secondary_color = BrandSettings::find($secondary_color->id);
                     $secondary_color->key_name = 'secondary_color';
                     $secondary_color->key_value = $request->secondary_color;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $secondary_color->save();
 
@@ -296,7 +296,7 @@ class BrandSettingsController extends Controller
 
                     $secondary_color->key_name = 'secondary_color';
                     $secondary_color->key_value = $request->secondary_color;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $secondary_color->save();
 
@@ -318,7 +318,7 @@ class BrandSettingsController extends Controller
                     $default_customer_password = BrandSettings::find($default_customer_password->id);
                     $default_customer_password->key_name = 'default_customer_password';
                     $default_customer_password->key_value = $request->default_customer_password;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $default_customer_password->save();
 
@@ -335,7 +335,7 @@ class BrandSettingsController extends Controller
 
                     $default_customer_password->key_name = 'default_customer_password';
                     $default_customer_password->key_value = $request->default_customer_password;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $default_customer_password->save();
 
@@ -378,7 +378,7 @@ class BrandSettingsController extends Controller
                     $company_alias = BrandSettings::find($company_alias->id);
                     $company_alias->key_name = 'company_alias';
                     $company_alias->key_value = $request->company_alias;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $company_alias->save();
 
@@ -395,7 +395,7 @@ class BrandSettingsController extends Controller
 
                     $company_alias->key_name = 'company_alias';
                     $company_alias->key_value = $request->company_alias;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $company_alias->save();
 
@@ -417,7 +417,7 @@ class BrandSettingsController extends Controller
                     $company_name = BrandSettings::find($company_name->id);
                     $company_name->key_name = 'company_name';
                     $company_name->key_value = $request->company_name;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $company_name->save();
 
@@ -434,7 +434,7 @@ class BrandSettingsController extends Controller
 
                     $company_name->key_name = 'company_name';
                     $company_name->key_value = $request->company_name;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $company_name->save();
 
@@ -456,7 +456,7 @@ class BrandSettingsController extends Controller
                     $phone = BrandSettings::find($phone->id);
                     $phone->key_name = 'company_phone';
                     $phone->key_value = $request->company_phone;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $phone->save();
 
@@ -473,7 +473,7 @@ class BrandSettingsController extends Controller
 
                     $phone->key_name = 'company_phone';
                     $phone->key_value = $request->company_phone;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $phone->save();
 
@@ -495,7 +495,7 @@ class BrandSettingsController extends Controller
                     $email = BrandSettings::find($email->id);
                     $email->key_name = 'company_email';
                     $email->key_value = $request->company_email;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $email->save();
 
@@ -511,7 +511,7 @@ class BrandSettingsController extends Controller
                     $email = new BrandSettings();
                     $email->key_name = 'company_email';
                     $email->key_value = $request->company_email;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $email->save();
 
@@ -533,7 +533,7 @@ class BrandSettingsController extends Controller
                     $address = BrandSettings::find($address->id);
                     $address->key_name = 'company_address';
                     $address->key_value = $request->company_address;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $address->save();
 
@@ -549,7 +549,7 @@ class BrandSettingsController extends Controller
                     $address = new BrandSettings();
                     $address->key_name = 'company_address';
                     $address->key_value = $request->company_address;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $address->save();
 
@@ -592,7 +592,7 @@ class BrandSettingsController extends Controller
                     $social_facebook = BrandSettings::find($social_facebook->id);
                     $social_facebook->key_name = 'social_facebook';
                     $social_facebook->key_value = $request->social_facebook;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $social_facebook->save();
 
@@ -608,7 +608,7 @@ class BrandSettingsController extends Controller
                     $social_facebook = new BrandSettings();
                     $social_facebook->key_name = 'social_facebook';
                     $social_facebook->key_value = $request->social_facebook;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $social_facebook->save();
 
@@ -630,7 +630,7 @@ class BrandSettingsController extends Controller
                     $social_instagram = BrandSettings::find($social_instagram->id);
                     $social_instagram->key_name = 'social_instagram';
                     $social_instagram->key_value = $request->social_instagram;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $social_instagram->save();
 
@@ -646,7 +646,7 @@ class BrandSettingsController extends Controller
                     $social_instagram = new BrandSettings();
                     $social_instagram->key_name = 'social_instagram';
                     $social_instagram->key_value = $request->social_instagram;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $social_instagram->save();
 
@@ -668,7 +668,7 @@ class BrandSettingsController extends Controller
                     $social_twitter = BrandSettings::find($social_twitter->id);
                     $social_twitter->key_name = 'social_twitter';
                     $social_twitter->key_value = $request->social_twitter;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $social_twitter->save();
 
@@ -684,7 +684,7 @@ class BrandSettingsController extends Controller
                     $twitter = new BrandSettings();
                     $twitter->key_name = 'social_twitter';
                     $twitter->key_value = $request->social_twitter;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $twitter->save();
 
@@ -706,7 +706,7 @@ class BrandSettingsController extends Controller
                     $social_youtube = BrandSettings::find($social_youtube->id);
                     $social_youtube->key_name = 'social_youtube';
                     $social_youtube->key_value = $request->social_youtube;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $social_youtube->save();
 
@@ -722,7 +722,7 @@ class BrandSettingsController extends Controller
                     $social_youtube = new BrandSettings();
                     $social_youtube->key_name = 'social_youtube';
                     $social_youtube->key_value = $request->social_youtube;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $social_youtube->save();
 
@@ -744,7 +744,7 @@ class BrandSettingsController extends Controller
                     $social_linkedin = BrandSettings::find($social_linkedin->id);
                     $social_linkedin->key_name = 'social_linkedin';
                     $social_linkedin->key_value = $request->social_linkedin;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $social_linkedin->save();
 
@@ -760,7 +760,7 @@ class BrandSettingsController extends Controller
                     $social_linkedin = new BrandSettings();
                     $social_linkedin->key_name = 'social_linkedin';
                     $social_linkedin->key_value = $request->social_linkedin;
-                    $management = User::role(['Admin', 'Brand Manager'])->get();
+                    $management = User::role(['Admin', 'Teacher'])->get();
                     $management->pluck('id');
                     $social_linkedin->save();
 

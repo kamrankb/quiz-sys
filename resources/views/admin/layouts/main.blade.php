@@ -5,8 +5,6 @@
     <meta charset="utf-8" />
     <title> {{ (!empty($company_name->key_value) ? $company_name->key_value : '') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="" name="description" />
-    <meta content="BrandX" name="author" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <!-- App favicon -->
@@ -54,7 +52,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
-                            <script>document.write(new Date().getFullYear())</script> © {{ !empty($brand_settings['custom_footer']->key_value) ? $brand_settings['custom_footer']->key_value : 'Brandx'}} .
+                            <script>document.write(new Date().getFullYear())</script> © {{ env('APP_NAME') }} .
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-end d-none d-sm-block">

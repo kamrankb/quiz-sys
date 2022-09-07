@@ -197,7 +197,7 @@ class RoleController extends Controller
             'name' => 'required|unique:roles,name',
             'permission' => 'required',
         ]);
-        $management = User::role(['Admin', 'Brand Manager'])->get();
+        $management = User::role(['Admin', 'Teacher'])->get();
         $management->pluck('id');
         $data = array(
             "success"=> true,
@@ -235,7 +235,7 @@ class RoleController extends Controller
         ]);
         $role = Role::find($request->id);
         $role->name = $request->name;
-        $management = User::role(['Admin', 'Brand Manager'])->get();
+        $management = User::role(['Admin', 'Teacher'])->get();
         $management->pluck('id');
         $data = array(
             "success"=> true,
