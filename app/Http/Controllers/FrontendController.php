@@ -14,4 +14,8 @@ class FrontendController extends Controller
     {
         return view('frontend.pages.home');
     }
+
+    public function quizes() {
+        return view('frontend.pages.main');
+    }
 }
