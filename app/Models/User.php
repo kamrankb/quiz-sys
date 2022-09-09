@@ -17,7 +17,8 @@ class User extends Authenticatable implements JWTSubject
 
 
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
     ];
@@ -51,27 +52,4 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsTo(User::class, 'created_by', 'id');
     }
 
-    public function payment_link()
-    {
-        return $this->hasMany(PaymentLink::class);
-    }
-
-    public function country()
-    {
-        return $this->belongsTo(CountryCurrencies::class,'country','id');
-    }
-
-    public function payment()
-    {
-        return $this->hasMany(Payments::class,'customer_id','id');
-    }
-
-    public function paymentLink()
-    {
-        return $this->hasMany(PaymentLink::class,'customer_id','id');
-    }
-   
-    public function user_Infos(){
-        return $this->hasMany(UserInfo::class, 'user_id', 'id');
-    }
 }
