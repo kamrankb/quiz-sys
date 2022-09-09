@@ -6,7 +6,7 @@
                 <a href="#" class="logo logo-light">
                     <span class="logo-sm"></span>
                     <span class="logo-lg">
-                        <img src="{{ (!empty($logo->key_value) ? asset($logo->key_value) : asset('backend/assets/images/users/logo.png')) }}" style="width: 40%;height:40%;">
+                        {{ env('APP_NAME') }}
                     </span>
                 </a>
             </div>

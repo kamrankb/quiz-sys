@@ -89,7 +89,7 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-globe"></i>
-                        <span key="t-tasks">Brand Setting</span>
+                        <span key="t-tasks">Setting</span>
                     </a>
                     <ul class="sub-menu mm-collapse" aria-expanded="false">
                         <li>

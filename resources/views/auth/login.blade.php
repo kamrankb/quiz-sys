@@ -58,7 +58,7 @@
                       @endif
                       </div>
                     </form>
-                    <p class="not-user-text">Not A User Yet? <a href="register.html">Register Now!</a></p>
+                    <p class="not-user-text">Not A User Yet? <a href="{{ route('register') }}">Register Now!</a></p>
                   </div>
                 </div>
               </div>

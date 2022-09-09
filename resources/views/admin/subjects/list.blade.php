@@ -22,16 +22,15 @@
                     <h3>
                         @can('Subscriber-Create')
                             <h3>
-                                <a href="{{ route('subject.add') }}" class="btn btn-xs btn-success float-right add">Add
-                                Category</a>
-                                <a href="{{ route('subject.list') }}" class="btn btn-xs btn-primary">All Category</a>
+                                <a href="{{ route('subject.add') }}" class="btn btn-xs btn-success float-right add">Add Subject</a>
+                                <a href="{{ route('subject.list') }}" class="btn btn-xs btn-primary">All Subject</a>
                                 <a href="{{ route('subject.list.trashed') }}"class="btn btn-xs btn-danger">Trash</a>
 
                             </h3>
                         @endcan
                     </h3>
                     <hr>
-                    <table id="category" class="table table-bordered table-condensed table-striped"
+                    <table id="subject" class="table table-bordered table-condensed table-striped"
                         style="font-size: small;">
                         <thead>
                             <tr>
@@ -49,7 +48,7 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="orderdetailsModalLabel"> View Category</h5>
+                                    <h5 class="modal-title" id="orderdetailsModalLabel"> View Subject</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
@@ -178,7 +177,7 @@
                 btnUpdate = $('.btn-update');
                 btnView = $('.btn-view');
 
-            var table = $('#category').DataTable({
+            var table = $('#subject').DataTable({
                 ajax: route('subject.list'),
                 serverSide: true,
                 processing: true,
@@ -274,7 +273,7 @@
                             success: function(data) {
                                 console.log(data);
                                 if ($.isEmptyObject(data.error)) {
-                                    let table = $('#category').DataTable();
+                                    let table = $('#subject').DataTable();
                                     table.row('#' + id).remove().draw(false)
                                     showMsg("success", data.message);
                                 } else {

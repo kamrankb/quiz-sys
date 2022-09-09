@@ -14,7 +14,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-                    <h5>Add New Category:</h5>
+                    <h5>Add New Subject:</h5>
                     <form action="{{route('subject.save')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="row">

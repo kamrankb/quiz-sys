@@ -5,7 +5,7 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title mb-4">UPDATE CATEGORY</h4>
+                    <h4 class="card-title mb-4">UPDATE SUBJECT</h4>
                     @if( Session::has("success") )
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             <i class="mdi mdi-check-all me-2"></i>
