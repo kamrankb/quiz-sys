@@ -23,6 +23,9 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
+                if(Auth::user()->hasRole('Student')) {
+                    return redirect()->route('front.quizes');
+                }
                 return redirect()->route('admin.dashboard');
             }
         }
