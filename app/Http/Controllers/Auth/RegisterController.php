@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Student_subject;
+use App\Models\Subjects;
+use App\Models\Teacher_subject;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\View\Component;
 
 class RegisterController extends Controller
 {
@@ -50,9 +54,12 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8'],
+            'subject' => ['required', 'integer'],
+            'role' => ['required', 'string'],
         ]);
     }
 
@@ -64,10 +71,37 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        $user = User::create([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-        ]);
+        ])->assignRole($data['role']);
+
+        if($user) {
+            if($data['role']=='Teacher') {
+                Teacher_subject::create([
+                    'teacher_id' => $user->id,
+                    'subject_id' => $data['subject'],
+                    'created_by' => 1,
+                    'status' => 1
+                ]);
+            } else if($data['role']=='Student') {
+                Student_subject::create([
+                    'student_id' => $user->id,
+                    'subject_id' => $data['subject'],
+                    'created_by' => 1,
+                    'status' => 1
+                ]);
+            }
+
+            return $user;
+        }
+    }
+
+    public function showRegistrationForm()
+    {
+        $subjects = Subjects::select('id','name')->get();
+        return view('auth.register', compact('subjects'));
     }
 }
