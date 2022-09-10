@@ -75,7 +75,13 @@ class CreateUserSeeder extends Seeder
         $Quiz3 = Permission::create(['name' => 'Quiz-View','guard_name' => 'web']);
         $Quiz4 = Permission::create(['name' => 'Quiz-Delete','guard_name' => 'web']);
 
-        //Quiz Create
+        //Questions Create
+        $question1 = Permission::create(['name' => 'Question-Create','guard_name' => 'web']);
+        $question2 = Permission::create(['name' => 'Question-Edit','guard_name' => 'web']);
+        $question3 = Permission::create(['name' => 'Question-View','guard_name' => 'web']);
+        $question4 = Permission::create(['name' => 'Question-Delete','guard_name' => 'web']);
+
+        //Subject Create
         $Subject1 = Permission::create(['name' => 'Subject-Create','guard_name' => 'web']);
         $Subject2 = Permission::create(['name' => 'Subject-Edit','guard_name' => 'web']);
         $Subject3 = Permission::create(['name' => 'Subject-View','guard_name' => 'web']);
@@ -87,15 +93,17 @@ class CreateUserSeeder extends Seeder
         $adminRole->givePermissionTo([$Permission1, $Permission2, $Permission3, $Permission4]);
         $adminRole->givePermissionTo([$Role1, $Role2, $Role3, $Role4]);
         $adminRole->givePermissionTo([$Quiz1, $Quiz2, $Quiz3, $Quiz4]);
+        $adminRole->givePermissionTo([$question1, $question2, $question3, $question4]);
         $adminRole->givePermissionTo([$Subject1, $Subject2, $Subject3, $Subject4]);
         
-        //Add Permissions to brandManagerRole 
+        //Add Permissions to TeacherRole 
         $teacherRole->givePermissionTo([$Userpermission1, $Userpermission2, $Userpermission3, $Userpermission4]);
         $teacherRole->givePermissionTo([$Role1, $Role2, $Role3, $Role4]);
         $teacherRole->givePermissionTo([$Quiz1, $Quiz2, $Quiz3, $Quiz4]);
+        $adminRole->givePermissionTo([$question1, $question2, $question3, $question4]);
         $teacherRole->givePermissionTo([$Subject1, $Subject2, $Subject3, $Subject4]);
         
-        //Add Permissions to salespersonRole 
+        //Add Permissions to Student 
         $studentRole->givePermissionTo([$Quiz1]);
         $studentRole->givePermissionTo([$Subject1]);
     }
