@@ -37,7 +37,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $user = User::all();
+            $user = User::role('Admin')->get();
             return DataTables::of($user)
                 ->addColumn('action', function ($row) {
 
@@ -81,6 +81,104 @@ class UserController extends Controller
         $roles = Role::pluck('name', 'name')->all();
 
         return view('admin.users.list', compact('roles'));
+    }
+
+    public function teachers(Request $request)
+    {
+        if ($request->ajax()) {
+            $user = User::role('Teacher')->get();
+            return DataTables::of($user)
+                ->addColumn('action', function ($row) {
+
+                    $html = ' <a href="#" class="btn btn-primary viewModal"  data-bs-toggle="modal" data-bs-target=".userDetailsModal" data-id="' . $row->id . '"><i title="View" class="fas fa-eye"></i></a>&nbsp';
+                    $html .= '<a href="' . route('user.edit', $row->id) . '"  class="btn btn-success btn-edit" ><i class="fas fa-edit"></i></a>&nbsp';
+
+                    if (Auth::user()->can('User-Delete')) {
+                        $html .= '<button data-id="' . $row->id . '" id="sa-params" class="btn btn-xs  btn-danger btn-delete" ><i class="far fa-trash-alt"></i></button>&nbsp';
+                    }
+                    return $html;
+                })
+                ->addColumn('image', function ($row) {
+                    $imageName = Str::of($row->image)->replace(' ', '%10');
+                    if ($row->image) {
+                        $image = '<img src=' . asset('/' . $imageName) . ' class="avatar-sm" />';
+                    } else {
+                        $image = '<img src=' . asset('backend/assets/img/users/no-image.jpg') . ' class="avatar-sm" />';
+                    }
+                    return $image;
+                })
+                ->addColumn('roles', function (User $User) {
+                    if ($User->Roles->first()) {
+                        return '<span class="badge badge-pill badge-soft-success font-size-12 ">'. (!empty($User->Roles->first()->name) ? $User->Roles->first()->name : '-') .'</span>';
+                    } else {
+
+                        return '-';
+                    }
+                })
+                ->addColumn('created_at', function ($row) {
+                    return date('d-M-Y', strtotime($row->created_at)) . '<br /> <label class="text-primary">' . Carbon::parse($row->created_at)->diffForHumans() . '</label>';
+                })->addColumn('created_by_name', function ($row) {
+
+
+                    return $row->createdBy()->first();
+                })
+                ->addColumn('status', function ($row) {
+                    $btn = '<div class="square-switch"><input type="checkbox" id="switch' . $row->id . '" class="user_status" switch="bool" data-id="' . $row->id . '" value="' . ($row->status == 1 ? "1" : "0") . '" ' . ($row->status == 1 ? "checked" : "") . '/><label for="switch' . $row->id . '" data-on-label="Yes" data-off-label="No"></label></div>';
+                    return $btn;
+                })->rawColumns(['action', 'roles', 'image', 'created_at', 'status', 'created_by_name'])->make(true);
+        }
+        $roles = Role::pluck('name', 'name')->all();
+
+        return view('admin.users.teacherList', compact('roles'));
+    }
+    
+    public function students(Request $request)
+    {
+        if ($request->ajax()) {
+            $user = User::role('Student')->get();
+            return DataTables::of($user)
+                ->addColumn('action', function ($row) {
+
+                    $html = ' <a href="#" class="btn btn-primary viewModal"  data-bs-toggle="modal" data-bs-target=".userDetailsModal" data-id="' . $row->id . '"><i title="View" class="fas fa-eye"></i></a>&nbsp';
+                    $html .= '<a href="' . route('user.edit', $row->id) . '"  class="btn btn-success btn-edit" ><i class="fas fa-edit"></i></a>&nbsp';
+
+                    if (Auth::user()->can('User-Delete')) {
+                        $html .= '<button data-id="' . $row->id . '" id="sa-params" class="btn btn-xs  btn-danger btn-delete" ><i class="far fa-trash-alt"></i></button>&nbsp';
+                    }
+                    return $html;
+                })
+                ->addColumn('image', function ($row) {
+                    $imageName = Str::of($row->image)->replace(' ', '%10');
+                    if ($row->image) {
+                        $image = '<img src=' . asset('/' . $imageName) . ' class="avatar-sm" />';
+                    } else {
+                        $image = '<img src=' . asset('backend/assets/img/users/no-image.jpg') . ' class="avatar-sm" />';
+                    }
+                    return $image;
+                })
+                ->addColumn('roles', function (User $User) {
+                    if ($User->Roles->first()) {
+                        return '<span class="badge badge-pill badge-soft-success font-size-12 ">'. (!empty($User->Roles->first()->name) ? $User->Roles->first()->name : '-') .'</span>';
+                    } else {
+
+                        return '-';
+                    }
+                })
+                ->addColumn('created_at', function ($row) {
+                    return date('d-M-Y', strtotime($row->created_at)) . '<br /> <label class="text-primary">' . Carbon::parse($row->created_at)->diffForHumans() . '</label>';
+                })->addColumn('created_by_name', function ($row) {
+
+
+                    return $row->createdBy()->first();
+                })
+                ->addColumn('status', function ($row) {
+                    $btn = '<div class="square-switch"><input type="checkbox" id="switch' . $row->id . '" class="user_status" switch="bool" data-id="' . $row->id . '" value="' . ($row->status == 1 ? "1" : "0") . '" ' . ($row->status == 1 ? "checked" : "") . '/><label for="switch' . $row->id . '" data-on-label="Yes" data-off-label="No"></label></div>';
+                    return $btn;
+                })->rawColumns(['action', 'roles', 'image', 'created_at', 'status', 'created_by_name'])->make(true);
+        }
+        $roles = Role::pluck('name', 'name')->all();
+
+        return view('admin.users.studentList', compact('roles'));
     }
 
     public function form(Request $request)

@@ -58,6 +58,8 @@ Route::middleware(['auth'])->group(function () {
     // users
     Route::controller(UserController::class)->group(function () {
         Route::get('user/list', 'index')->name('user.list');
+        Route::get('teacher/list', 'teachers')->name('user.teachers.list');
+        Route::get('student/list', 'students')->name('user.students.list');
         Route::get('user/add', 'form')->name('user.add');
         Route::get('/user/profile', [UserController::class, 'userProfile_form']);
         Route::post('/user/profile/update', [UserController::class, 'userProfile_update'])->name('admin-user.profile-update');
