@@ -89,6 +89,10 @@
                             <li><a href="{{ route('quiz.list') }}">Quiz List</a></li>
                             @endcan
 
+                            @can('Quiz-View')
+                            <li><a href="{{ route('quiz.assign.list') }}">Quiz Assign</a></li>
+                            @endcan
+
                         </ul>
                     </li>
                 @endcan

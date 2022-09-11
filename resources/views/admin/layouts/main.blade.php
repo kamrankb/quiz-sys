@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title> {{ (!empty($company_name->key_value) ? $company_name->key_value : '') }}</title>
+    <title> {{ (!empty($brand_settings['company_name']->key_value) ? $brand_settings['company_name']->key_value : '') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 

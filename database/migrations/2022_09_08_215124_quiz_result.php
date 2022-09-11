@@ -15,6 +15,8 @@ class QuizResult extends Migration
     {
         Schema::create('quiz_result', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('quiz_assign_id')->unsigned()->index()->nullable();
+            $table->foreign('quiz_assign_id')->references('id')->on('quiz_student')->onDelete('cascade')->onUpdate('cascade');
             $table->bigInteger('quiz_id')->unsigned()->index()->nullable();
             $table->foreign('quiz_id')->references('id')->on('quiz')->onDelete('cascade')->onUpdate('cascade');
             $table->bigInteger('student_id')->unsigned()->index()->nullable();

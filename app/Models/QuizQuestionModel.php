@@ -7,13 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Traits\HasRoles;
 
-class QuizModel extends Model
+class QuizQuestionModel extends Model
 {
     use HasFactory,HasRoles,SoftDeletes;
     
-    protected $table = 'quiz';
+    protected $table = 'questions';
 
-    public function subject(){
-        return $this->belongsTo(Subjects::class, 'subject_id', 'id');
-    }
 }

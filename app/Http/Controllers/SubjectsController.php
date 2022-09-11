@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Response;
 use App\Models\User;
 use Illuminate\Support\Str;
-use App\Models\Pages;
 use App\Models\Subjects;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\QuickNotify;
@@ -26,6 +25,7 @@ class SubjectsController extends Controller
         $this->middleware('permission:Subject-Edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:Subject-Delete', ['only' => ['destroy']]);
     }
+    
     public function index(Request $request)
     {
         if ($request->ajax()) {

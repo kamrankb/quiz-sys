@@ -99,7 +99,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/quiz/trash', 'trashed')->name('quiz.list.trashed');
         Route::post('/quiz/detail/{isTrashed?}', 'view')->name('quiz.detail.view');
         Route::get('/quiz/restore/{id}', 'restore')->name('quiz.restore');
-        Route::get('/quiz/add', 'form')->name('quiz.add');
+        Route::get('/quiz/add', 'create')->name('quiz.add');
         Route::post('/quiz/save', 'store')->name('quiz.save');
         Route::get('/quiz/edit/{id}', 'edit')->name('quiz.edit');
         Route::post('/quiz/remove', 'delete')->name('quiz.remove');
