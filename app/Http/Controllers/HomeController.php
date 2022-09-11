@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Payments;
 use App\Models\Partner;
 use App\Models\PaymentLink;
+use App\Models\QuizModel;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -39,10 +40,11 @@ class HomeController extends Controller
 
     public function dashboard(Request $request)
     {
-        $teachers = User::role(['Teacher'])->get();
-        $students = User::role(['Student'])->get();
+        $teachers = User::role(['Teacher'])->count();
+        $students = User::role(['Student'])->count();
+        $quizes = QuizModel::count();
 
-        return view('admin.index', compact('teachers', 'students'));
+        return view('admin.index', compact('teachers', 'students', 'quizes'));
 
         if(Auth::user()->hasRole('Salesperson')) {
             
