@@ -11,6 +11,7 @@ Route::name('front.')->group(function() {
        })->name('home');
 
        Route::get('/quizes', [FrontendController::class, 'quizes'])->name('quizes');
+       Route::get('/quiz/{id}', [FrontendController::class, 'attempt_quiz'])->name('quiz.attempt');
        
 });
 
