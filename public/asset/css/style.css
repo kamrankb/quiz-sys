@@ -31,6 +31,7 @@ h1, h2, h3 {
   width: 100%;
   height: 100vh;
   background: #f0f1f3;
+  z-index: 1;
 }
 
 .main-section::before {
@@ -42,6 +43,7 @@ h1, h2, h3 {
   height: 0;
   border-top: 100vh solid var(--primary-color);
   border-right: 100vw solid transparent;
+  z-index: -1;
 }
 
 .main-section.has-footer {
@@ -55,7 +57,7 @@ h1, h2, h3 {
   transform: translate(-50%, -50%);
 }
 
-.login-signup-area {
+.login-signup-area, .questions-area {
   background: #fff;
   width: 100%;
   max-width: 900px;
@@ -66,6 +68,10 @@ h1, h2, h3 {
   text-align: center;
 }
 
+.questions-area {
+    background: #f9f9f9;
+    padding: 30px;
+}
 .login-signup-box > h1 {
   font-size: 28px;
   margin-bottom: 10px;
@@ -111,6 +117,27 @@ h1, h2, h3 {
   color: #fff;
   font-weight: 500;
   margin-top: 10px;
+}
+
+.question-counter-area, .timer-counter-area {
+  padding: 10px 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, .05);
+  background: #fff;
+  display: inline-block;
+  color: #000;
+  font-weight: 600;
+  min-width: 150px;
+  text-align: center;
+}
+
+.questionTimer-counter-area {
+    max-width: 900px;
+    padding-top: 15px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .not-user-text {
@@ -471,7 +498,7 @@ form.row > .row {
   font-size: 28px;
   line-height: 1;
   margin-bottom: 10px;
-  color: #446cdd;
+  color: var(--primary-color);
   transition: all .6s;
 }
 
@@ -485,7 +512,7 @@ form.row > .row {
 }
 
 .difficulty-select-box :checked + label {
-  background: #446cdd;
+  background: var(--primary-color);
   color: #fff;
 }
 
@@ -501,6 +528,7 @@ form.row > .row {
   padding: 15px 0;
   box-shadow: 0 0 15px rgba(0, 0, 0, .05);
   background: #fff;
+  z-index: 1;
 }
 
 .footer .form-btn {
@@ -524,7 +552,7 @@ form.row > .row {
 .question-heading > i {
   font-size: 50px;
   margin-bottom: 15px;
-  color: #446cdd;
+  color: var(--primary-color);
 }
 
 @media only screen and (max-width: 576px) {
