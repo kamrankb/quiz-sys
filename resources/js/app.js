@@ -39,8 +39,5 @@ axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 app.use(VueLoading);
  
 app.component('CardElement', require('./components/stripe/CardElement.vue').default);
-app.component('mainForm', require('./components/stripe/mainForm.vue').default);
-app.component('pageSidebar', require('./components/stripe/pageSidebar.vue').default);
-app.component('StripePayment', require('./pages/StripePayment.vue').default);
 app.mount("#app");
   
