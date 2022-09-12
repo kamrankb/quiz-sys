@@ -96,6 +96,7 @@ Route::middleware(['auth'])->group(function () {
     // Quiz
     Route::controller(QuizController::class)->group(function () {
         Route::get('/quiz/list', 'index')->name('quiz.list');
+        Route::get('/quiz/assign/list', 'index')->name('quiz.assign.list');
         Route::get('/quiz/trash', 'trashed')->name('quiz.list.trashed');
         Route::post('/quiz/detail/{isTrashed?}', 'view')->name('quiz.detail.view');
         Route::get('/quiz/restore/{id}', 'restore')->name('quiz.restore');
