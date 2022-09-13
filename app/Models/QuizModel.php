@@ -16,4 +16,8 @@ class QuizModel extends Model
     public function subject(){
         return $this->belongsTo(Subjects::class, 'subject_id', 'id');
     }
+
+    public function qQuestions(){
+        return $this->hasMany(QuizQuestionModel::class, 'quiz_id', 'id');
+    }
 }
