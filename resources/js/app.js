@@ -38,6 +38,6 @@ app.use(Ziggy);
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 app.use(VueLoading);
  
-app.component('CardElement', require('./components/stripe/CardElement.vue').default);
+app.component('QuizComponent', require('./components/QuizComponent.vue').default);
 app.mount("#app");
   

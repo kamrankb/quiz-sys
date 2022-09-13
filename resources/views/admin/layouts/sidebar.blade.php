@@ -35,21 +35,23 @@
                         </a>
                         <ul class="sub-menu mm-collapse" aria-expanded="false">
                             @hasanyrole('Admin')
-                            <li><a href="{{ route('user.list')}}">Admin List</a></li>
+                            <li><a href="{{ route('user.list') }}">Admin List</a></li>
                             @endhasanyrole
+                            
                             @can('User-View')
-                            <li><a href="{{ route('user.teachers.list')}}">Teacher List</a></li>
+                            <li><a href="{{ route('user.teachers.list') }}">Teacher List</a></li>
                             @endcan
 
                             @can('User-View')
-                            <li><a href="{{ route('user.students.list')}}">Student List</a></li>
+                            <li><a href="{{ route('user.students.list') }}">Student List</a></li>
                             @endcan
 
                             @can('Role-View')
-                            <li><a href="{{ route('role.list')}}">Roles</a></li>
+                            <li><a href="{{ route('role.list') }}">Roles</a></li>
                             @endcan
+
                             @can('Permission-View')
-                            <li><a href="{{ route('permission.list')}}">Permissions</a></li>
+                            <li><a href="{{ route('permission.list') }}">Permissions</a></li>
                             @endcan
                         </ul>
                     </li>
@@ -69,7 +71,6 @@
                             @can('Subject-View')
                             <li><a href="{{ route('subject.list') }}">Subject List</a></li>
                             @endcan
-
                         </ul>
                     </li>
                 @endcan

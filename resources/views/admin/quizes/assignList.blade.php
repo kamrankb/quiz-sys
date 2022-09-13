@@ -23,7 +23,6 @@
                                 <a href="{{ route('quiz.add') }}" class="btn btn-xs btn-success float-right add">Add Subject</a>
                                 <a href="{{ route('quiz.list') }}" class="btn btn-xs btn-primary">All Subject</a>
                                 <a href="{{ route('quiz.list.trashed') }}"class="btn btn-xs btn-danger">Trash</a>
-
                             </h3>
                         @endcan
                     </h3>
@@ -41,93 +40,6 @@
                             </tr>
                         </thead>
                     </table>
-                    <div class="modal fade orderdetailsModal" id="modal" tabindex="-1" role="dialog"
-                        aria-labelledby="orderdetailsModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="orderdetailsModalLabel"> View Subject</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="table-responsive">
-                                        <table class="table align-middle table-nowrap">
-                                            <thead>
-                                            <tbody>
-                                                <tr>
-                                                    <th scope="row">
-                                                        <div>
-                                                            <h5 class="text-truncate font-size-14">ID</h5>
-                                                        </div>
-                                                    </th>
-                                                    <td>
-                                                        <div>
-                                                            <h5 class="text-truncate font-size-14 " id="id"></h5>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">
-                                                        <div>
-                                                            <h5 class="text-truncate font-size-14">Name</h5>
-                                                        </div>
-                                                    </th>
-                                                    <td>
-                                                        <div>
-                                                            <h5 class="text-truncate font-size-14 badge badge-pill badge-soft-success font-size-12"
-                                                                id="name"></h5>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">
-                                                        <div>
-                                                            <h5 class="text-truncate font-size-14">Title</h5>
-                                                        </div>
-                                                    </th>
-                                                    <td>
-                                                        <div>
-                                                            <h5 class="text-truncate font-size-14 badge badge-pill badge-soft-success font-size-12"
-                                                                id="title"></h5>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">
-                                                        <div>
-                                                            <h5 class="text-truncate font-size-14">Description</h5>
-                                                        </div>
-                                                    </th>
-                                                    <td>
-                                                        <div>
-                                                            <h5 class="text-truncate font-size-14" id="description"></h5>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">
-                                                        <div>
-                                                            <h5 class="text-truncate font-size-14">Image</h5>
-                                                        </div>
-                                                    </th>
-                                                    <td>
-                                                        <div>
-                                                            <img src="" class="text-truncate font-size-11" id="image"></h5>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -142,10 +54,8 @@
             }
         });
         $(document).ready(function() {
-            // $.noConflict();
-
-            var modal = $('.modal')
-            var form = $('.form')
+            var modal = $('.modal');
+            var form = $('.form');
             var btnAdd = $('.add'),
                 btnSave = $('.btn-save'),
                 btnUpdate = $('.btn-update');
@@ -158,10 +68,12 @@
                 aaSorting: [
                     [0, "desc"]
                 ],
-                columns: [{
+                columns: [
+                    {
                         data: 'id',
                         name: 'id'
-                    },{
+                    },
+                    {
                         data: 'subject.name',
                         name: 'subject'
                     },
@@ -187,113 +99,6 @@
                 },
                 "bDestroy": true
             });
-            // update ajax
-            $(document).on('click', '.btn-view', function() {
-                $.ajax({
-                    url: route('quiz.view'),
-                    type: "get",
-                    data: {
-                        id: $(this).data('id')
-                    },
-                    success: function(data) {
-                        $('#id').html(data.id);
-                        $('#name').html(data.name);
-                        $('#title').html(data.title);
-                        $('#description').html(data.description);
-                        // $('#metatitle').html(data.metatitle);
-                        // $('#metadesc').html(data.metadesc);
-                        let image;
-                        if(data?.image) {
-                            image = '{{ URL::asset("/") }}' + data.image;
-                        } else {
-                            image = '{{ URL::asset("backend/assets/img/users/no-image.jpg") }}';
-
-                        }
-                        document.getElementById('image').src = image;
-                    }
-                });
-            });
-
-            // delete ajax
-            $(document).on('click', '.btn-delete', function() {
-
-                var formData = form.serialize();
-
-                var updateId = form.find('input[name="id"]').val();
-                var id = $(this).data('id')
-                var el = $(this)
-                Swal.fire({
-                    title: "Are you sure?",
-                    text: "You won't be able to revert this!",
-                    icon: "warning",
-                    showCancelButton: !0,
-                    confirmButtonText: "Yes, delete it!",
-                    cancelButtonText: "No, cancel!",
-                    confirmButtonClass: "btn btn-success mt-2",
-                    cancelButtonClass: "btn btn-danger ms-2 mt-2",
-                    buttonsStyling: !1
-                }).then(function(t) {
-                    if (t.value) {
-                        if (!id) return;
-                        $.ajax({
-                            url: route('quiz.remove'),
-                            type: "POST",
-                            data: {
-                                id: id
-                            },
-                            dataType: 'JSON',
-
-                            success: function(data) {
-                                console.log(data);
-                                if ($.isEmptyObject(data.error)) {
-                                    let table = $('#subject').DataTable();
-                                    table.row('#' + id).remove().draw(false)
-                                    showMsg("success", data.message);
-                                } else {
-                                    printErrorMsg(data.error);
-                                }
-                            }
-                        });
-
-                    }
-
-                })
-            })
-        })
-        $(document).on('change', '.banner_status', function(e) {
-        let id = $(this).attr("data-id");
-        let status = $(this).is(':checked');
-
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: !0,
-            confirmButtonText: "Yes, Update it!",
-            cancelButtonText: "No, cancel!",
-            confirmButtonClass: "btn btn-success mt-2",
-            cancelButtonClass: "btn btn-danger ms-2 mt-2",
-            buttonsStyling: !1
-        }).then(function(t) {
-            if (t.value) {
-                if (!id) return;
-                $.ajax({
-                    url: route('quiz.status',[id]),
-                    type: "POST",
-                    data: {
-                        id: id,
-                        status: status
-                    },
-                    dataType: 'JSON',
-                    success: function(data) {
-                        showMsg("success", data.message);
-                        table.ajax().reload();
-                    }
-                });
-
-            } else {
-            }
-        })
-    });
+        });
     </script>
 @endpush
