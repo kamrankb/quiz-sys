@@ -7,7 +7,7 @@
             <h1>Take A Quiz</h1>
           </div>
           <div class="panel-inner-detail">
-            <table id="">
+            <table id="student_assign">
                 <thead>
                     <tr>
                         <th width="30">#</th>
@@ -16,6 +16,17 @@
                         <th width="150">Action</th>
                     </tr>
                 </thead>
+                <tbody>
+                  @forelse($quizes as $quiz)
+                    <tr>
+                      <td>{{ $quiz->id }}</td>
+                      <td>{{ $quiz->quiz->subject->name }}</td>
+                      <td>{{ $quiz->quiz->name }}</td>
+                      <td><a href="{{ route('front.quiz.attempt', $quiz->id) }}" class="table-action-button"><i class="fa-solid fa-play"></i> Start Test</a></td>
+                    </tr>
+                  @empty
+                  @endforelse
+                </tbody>
             </table>
           </div>
         </div>
