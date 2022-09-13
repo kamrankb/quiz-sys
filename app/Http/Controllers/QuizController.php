@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Notification;
 use App\Models\QuizModel;
 use App\Models\QuizQuestionModel;
+use App\Models\QuizResultModel;
+use App\Models\QuizStudentModel;
 use App\Models\Subjects;
 use App\Models\User;
 use App\Notifications\QuickNotify;
@@ -41,12 +43,7 @@ class QuizController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $html = '<button href="#"  class="btn btn-primary btn-view"  data-bs-toggle="modal" data-bs-target=".orderdetailsModal" data-id="' . $row->id . '"><i class="far fa-eye"></i></button>&nbsp';
-                    if (Auth::user()->can('Subscriber-Edit')) {
-                        $html .= '<a href="' . route('subject.edit', $row->id) . '"  class="btn btn-success btn-edit" ><i class="fas fa-edit"></i></a>&nbsp';
-                    }
-                    if (Auth::user()->can('Subscriber-Delete')) {
-                        $html .= '<button data-id="' . $row->id . '" id="sa-params" class="btn btn-xs  btn-danger btn-delete" ><i class="far fa-trash-alt"></i></button>&nbsp';
-                    }
+                   
                     return $html;
                 })->addColumn('created_at', function ($row) {
                     return date('d-M-Y', strtotime($row->created_at)) . '<br /> <label class="text-primary">' . Carbon::parse($row->created_at)->diffForHumans() . '</label>';
@@ -199,5 +196,17 @@ class QuizController extends Controller
     public function destroy(QuizModel $quizModel)
     {
         //
+    }
+
+    public function questions_quiz($quiz) {
+        $quiz_data = QuizStudentModel::where('id', $quiz)->with('quiz.subject:id,name','quiz.qQuestions:id,quiz_id,question,option1,option2,option3,option4,anwer')->first();
+        
+        return response()->json(["status"=> true, "data"=> $quiz_data]);
+    }
+
+    public function quiz_submit(Request $request, $quiz_assign_id) {
+        $result = new QuizResultModel();
+        
+        return response()->json(["status"=> true, "data"=> $quiz_data]);
     }
 }
