@@ -16,7 +16,7 @@
                     </a>
 
                 </li>
-                <li>
+                {{-- <li>
                     <a href="{{ route('admin-notification.main')}}" class="waves-effect">
                         <i class="bx bx-bell"></i>
                         <span class="badge bg-danger rounded-pill float-end"></span>
@@ -25,7 +25,7 @@
 
                     </a>
 
-                </li>
+                </li> --}}
 
                 @can('User-View','Role-View','Permission-Create')
                     <li>
