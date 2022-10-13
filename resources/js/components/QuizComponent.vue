@@ -98,7 +98,8 @@ export default {
               answer:null,
               status:null
             },
-            userAnswers: []
+            userAnswers: [],
+            myTimeLeft: null
         };
     },
     
@@ -112,14 +113,18 @@ export default {
       currentTimeLeft: {
           handler(value) {
               if (value > 0) {
-                  setTimeout(() => {
+                  if (this.myTimeLeft) {
+                      clearTimeout(this.myTimeLeft);
+                  }
+                  
+                  this.myTimeLeft = setTimeout(() => {
                       this.currentTimeLeft--;
                   }, 1000);
               } else if(value==0) {
                 this.nextQuestion();
               }
           },
-          immediate: true // This ensures the watcher is triggered upon creation
+          deep: true // This ensures the watcher is triggered upon creation
       }
     },
 
@@ -151,7 +156,7 @@ export default {
       },
 
       quizSubmit() {
-        this.currentTimeLeft = null;
+        this.currentTimeLeft = 0;
         this.currentQuestion = null;
         this.quiz.data.quiz.q_questions = null;
 
@@ -191,6 +196,14 @@ export default {
         });
 
         return correctAnswers;
+      },
+
+      async updateQuestion() {
+        return await new Promise(function(resolve,reject) {
+          setTimeout(() => {
+            resolve("Next");
+          }, 1000);
+        });
       }
     },
 };
