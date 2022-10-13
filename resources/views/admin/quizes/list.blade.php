@@ -36,7 +36,7 @@
                                 <th>Subject</th>
                                 <th>Name</th>
                                 <th>Questions</th>
-                                <th>Status</th>
+                                <th>Difficulty</th>
                                 <th width="15%">Action</th>
                             </tr>
                         </thead>
@@ -83,41 +83,40 @@
                                                 <tr>
                                                     <th scope="row">
                                                         <div>
-                                                            <h5 class="text-truncate font-size-14">Title</h5>
+                                                            <h5 class="text-truncate font-size-14">Subject</h5>
                                                         </div>
                                                     </th>
                                                     <td>
                                                         <div>
                                                             <h5 class="text-truncate font-size-14 badge badge-pill badge-soft-success font-size-12"
-                                                                id="title"></h5>
+                                                                id="subjectName"></h5>
                                                         </div>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">
                                                         <div>
-                                                            <h5 class="text-truncate font-size-14">Description</h5>
+                                                            <h5 class="text-truncate font-size-14">Questions</h5>
                                                         </div>
                                                     </th>
                                                     <td>
                                                         <div>
-                                                            <h5 class="text-truncate font-size-14" id="description"></h5>
+                                                            <h5 class="text-truncate font-size-14" id="questions"></h5>
                                                         </div>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <th scope="row">
                                                         <div>
-                                                            <h5 class="text-truncate font-size-14">Image</h5>
+                                                            <h5 class="text-truncate font-size-14">Difficulty</h5>
                                                         </div>
                                                     </th>
                                                     <td>
                                                         <div>
-                                                            <img src="" class="text-truncate font-size-11" id="image"></h5>
+                                                            <h5 class="text-truncate font-size-14" id="difficulty"></h5>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                
                                             </tbody>
                                         </table>
                                     </div>
@@ -174,8 +173,8 @@
                         name: 'questions'
                     },
                     {
-                        data: 'status',
-                        name: 'status'
+                        data: 'difficulty',
+                        name: 'difficulty'
                     },
                     {
                         data: 'action',
@@ -187,6 +186,7 @@
                 },
                 "bDestroy": true
             });
+
             // update ajax
             $(document).on('click', '.btn-view', function() {
                 $.ajax({
@@ -196,20 +196,12 @@
                         id: $(this).data('id')
                     },
                     success: function(data) {
-                        $('#id').html(data.id);
-                        $('#name').html(data.name);
-                        $('#title').html(data.title);
-                        $('#description').html(data.description);
-                        // $('#metatitle').html(data.metatitle);
-                        // $('#metadesc').html(data.metadesc);
-                        let image;
-                        if(data?.image) {
-                            image = '{{ URL::asset("/") }}' + data.image;
-                        } else {
-                            image = '{{ URL::asset("backend/assets/img/users/no-image.jpg") }}';
-
-                        }
-                        document.getElementById('image').src = image;
+                        let quizData = data.data;
+                        $('#id').html(quizData.id);
+                        $('#subjectName').html(quizData.subject.name);
+                        $('#name').html(quizData.name);
+                        $('#questions').html(quizData.questions);
+                        $('#difficulty').html(quizData.difficulty);
                     }
                 });
             });

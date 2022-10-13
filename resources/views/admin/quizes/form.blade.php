@@ -54,7 +54,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <strong><label for="horizontal-title-input" class="col-sm-3 col-form-label">Questions</label></strong>
                                 <div class="col-sm-12">
                                     <input type="number" min="1" class="form-control" name="question_number" id="horizontal-title-input" placeholder="Enter Questions number here">
@@ -64,7 +64,22 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
+                                <strong><label for="horizontal-title-input" class="col-sm-3 col-form-label">Difficulty</label></strong>
+                                <div class="col-sm-12">
+                                    <select name="difficulty" class="form-control">
+                                        <option selected disabled>Select Difficulty</option>
+                                        <option value="Easy">Easy</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Hard">Hard</option>
+                                    </select>
+                                    @if ($errors->has('difficulty'))
+                                        <span class="text-danger">{{ $errors->first('difficulty') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
                                 <strong><label for="horizontal-title-input" class="col-sm-12 col-form-label">Time (In minute per Question)</label></strong>
                                 <div class="col-sm-12">
                                     <input type="number" min="1" class="form-control" name="time_limit" id="horizontal-title-input" placeholder="Enter Time per question in minutes here">
