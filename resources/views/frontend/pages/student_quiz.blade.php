@@ -22,7 +22,11 @@
                       <td>{{ $quiz->id }}</td>
                       <td>{{ $quiz->quiz->subject->name }}</td>
                       <td>{{ $quiz->quiz->name }}</td>
-                      <td><a href="{{ route('front.quiz.attempt', $quiz->id) }}" class="table-action-button"><i class="fa-solid fa-play"></i> Start Test</a></td>
+                      @if($quiz->result?->marks)
+                        <td><a class="table-action-button">({{ $quiz->result->marks }})</a></td>
+                      @else
+                        <td><a href="{{ route('front.quiz.attempt', $quiz->id) }}" class="table-action-button"><i class="fa-solid fa-play"></i> Start Test</a></td>
+                      @endif
                     </tr>
                   @empty
                   @endforelse

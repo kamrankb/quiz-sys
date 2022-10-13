@@ -20,7 +20,7 @@ class FrontendController extends Controller
     }
 
     public function quizes(Request $request) {
-        $quizes = QuizStudentModel::where('student_id', Auth::id())->with('student:id,first_name,last_name','quiz.subject:id,name')->get();
+        $quizes = QuizStudentModel::where('student_id', Auth::id())->with('student:id,first_name,last_name','quiz.subject:id,name', 'result:marks')->get();
         
         return view('frontend.pages.student_quiz', compact('quizes'));
     }
