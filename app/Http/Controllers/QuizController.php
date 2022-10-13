@@ -89,6 +89,7 @@ class QuizController extends Controller
             'name' => 'required',
             'question_number' => 'required',
             'time_limit' => 'required',
+            'difficulty' => 'required',
             'questions.*.question' => 'required',
             'questions.*.answer1' => 'required',
             'questions.*.answer2' => 'required',
@@ -196,6 +197,15 @@ class QuizController extends Controller
     public function destroy(QuizModel $quizModel)
     {
         //
+    }
+
+    public function view(Request $request) {
+        $quizData = QuizModel::select('id','subject_id','name','questions','time','difficulty')
+                    ->where('id',$request->id)
+                    ->where('status', 1)
+                    ->with('subject')->first();
+
+        return response()->json(["status" => true, "data" => $quizData]);
     }
 
     public function questions_quiz($quiz) {
