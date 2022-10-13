@@ -165,15 +165,21 @@ export default {
       },
 
       async nextQuestion() {
-        if(this.currentQuestion == (this.totalQuestion-1)) {
-          this.quizSubmit();
+        if(this.answer.answer) {
+          if(this.currentQuestion == (this.totalQuestion-1)) {
+            this.quizSubmit();
+          }
+          this.answer.status = await this.checkAnswer(this.currentQuestion, this.answer.answer);
+          this.userAnswers.push({...this.answer});
+          
+          this.answer.answer = null;
+          this.currentQuestion++;
+          this.currentTimeLeft = this.timePerQuestion;
+          this.answer.question = this.quiz?.data?.quiz.q_questions[this.currentQuestion].id;
+        } else {
+          alert('Select atleast ane answer to continue.')
         }
-        this.answer.status = await this.checkAnswer(this.currentQuestion, this.answer.answer);
-        this.userAnswers.push({...this.answer});
-
-        this.currentQuestion++;
-        this.currentTimeLeft = this.timePerQuestion;
-        this.answer.question = this.quiz?.data?.quiz.q_questions[this.currentQuestion].id;
+        
       },
 
       async checkAnswer(questionID, userAnswer) {
