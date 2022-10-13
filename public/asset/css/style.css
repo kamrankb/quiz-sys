@@ -554,6 +554,9 @@ form.row > .row {
   margin-bottom: 15px;
   color: var(--primary-color);
 }
+a.table-action-button {
+  color: #fff;
+}
 
 @media only screen and (max-width: 576px) {
   body {
