@@ -121,7 +121,7 @@ export default {
                       this.currentTimeLeft--;
                   }, 1000);
               } else if(value==0) {
-                this.nextQuestion();
+                this.nextQuestion('pass');
               }
           },
           deep: true // This ensures the watcher is triggered upon creation
@@ -155,17 +155,37 @@ export default {
             });
       },
 
-      quizSubmit() {
+      async quizSubmit() {
         this.currentTimeLeft = 0;
         this.currentQuestion = null;
         this.quiz.data.quiz.q_questions = null;
 
         alert(this.checkCorrectAnswers(this.userAnswers));
-      
+        
+        const formData = new FormData();
+          formData.append('quiz_id', this.quiz.data.quiz_id);
+          formData.append('correct_answers', this.checkCorrectAnswers(this.userAnswers));
+          formData.append('total_questions', this.totalQuestion);
+          formData.append('marks', this.checkCorrectAnswers(this.userAnswers));
+          formData.append('data', this.userAnswers);
+
+          let submission = await axios({
+              method: "post",
+              url: route('front.quiz.quiz_submit', this.quiz.data.id),
+              data: formData,
+              headers: { "Content-Type": "multipart/form-data" },
+          }).then(response => {
+            window.location.href = route('front.quizes.results');
+            return response;
+          }).catch(function (response) {
+              //handle error
+              console.log(response);
+              return false;
+          });
       },
 
-      async nextQuestion() {
-        if(this.answer.answer) {
+      async nextQuestion(pass) {
+        if(this.answer.answer || pass=='pass') {
           if(this.currentQuestion == (this.totalQuestion-1)) {
             this.quizSubmit();
           }
@@ -210,7 +230,7 @@ export default {
             resolve("Next");
           }, 1000);
         });
-      }
+      },
     },
 };
 </script>
