@@ -26,7 +26,7 @@
       <h3>Student's Panel</h3>
       <ul>
         <li>
-          <a href="studentDashboard.html"><i class="fa-solid fa-graduation-cap"></i>Test Results</a>
+          <a href="{{ route('front.quizes.results') }}"  class="{{ (request()->is('results')) ? 'active' : '' }}"><i class="fa-solid fa-graduation-cap"></i>Test Results</a>
         </li>
         <li>
           <a href="{{ route('front.quizes') }}" class="{{ (request()->is('quizes')) ? 'active' : '' }}"><i class="fa-solid fa-book"></i>Take A Test</a>
