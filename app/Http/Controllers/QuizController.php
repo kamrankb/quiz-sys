@@ -216,7 +216,20 @@ class QuizController extends Controller
 
     public function quiz_submit(Request $request, $quiz_assign_id) {
         $result = new QuizResultModel();
-        
-        return response()->json(["status"=> true, "data"=> $quiz_data]);
+        $result->quiz_assign_id = $quiz_assign_id;
+        $result->quiz_id = $request->quiz_id;
+        $result->student_id = Auth::user()->id;
+        $result->correct_answers = $request->correct_answers;
+        $result->total_questions = $request->total_questions;
+        $result->marks = $request->marks;
+        $result->data = $request->data;
+        $result->created_by = Auth::user()->id;
+        $result->status = 1;
+
+        if($result->save()) {
+            return response()->json(["status"=> true, "message"=> "Saved successfully."]);
+        } else {
+            return response()->json(["status" => false, "message" => "Not saved successfully."]);
+        }
     }
 }

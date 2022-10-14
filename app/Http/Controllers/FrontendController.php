@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contactinfo;
 use App\Models\Contactqueries;
 use App\Models\Pages;
+use App\Models\QuizResultModel;
 use App\Models\QuizStudentModel;
 use App\Models\Service;
 use Carbon\Carbon;
@@ -23,6 +24,12 @@ class FrontendController extends Controller
         $quizes = QuizStudentModel::where('student_id', Auth::id())->with('student:id,first_name,last_name','quiz.subject:id,name', 'result:marks')->get();
         
         return view('frontend.pages.student_quiz', compact('quizes'));
+    }
+
+    public function results(Request $request) {
+        $quizes = QuizResultModel::where('student_id', Auth::id())->with('student:id,first_name,last_name','quiz.subject:id,name')->get();
+        
+        return view('frontend.pages.quiz_results', compact('quizes'));
     }
 
     public function attempt_quiz(Request $request) {
