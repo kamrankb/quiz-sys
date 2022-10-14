@@ -12,6 +12,8 @@ Route::name('front.')->group(function() {
        })->name('home');
 
        Route::get('/quizes', [FrontendController::class, 'quizes'])->name('quizes');
+       Route::get('/results', [FrontendController::class, 'results'])->name('quizes.results');
+       Route::post('/quiz/submit/{quiz_assign_id}', [QuizController::class, 'quiz_submit'])->name('quiz.quiz_submit')->middleware('studentQuizAuthentication');
        Route::get('/quiz/{id}', [FrontendController::class, 'attempt_quiz'])->name('quiz.attempt')->middleware('studentQuizAuthentication');
        Route::get('/quiz/questions/{id}', [QuizController::class, 'questions_quiz'])->name('quiz.questions')->middleware('studentQuizAuthentication');
        
