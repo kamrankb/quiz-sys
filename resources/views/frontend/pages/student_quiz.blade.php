@@ -12,7 +12,8 @@
                     <tr>
                         <th width="30">#</th>
                         <th>Subject</th>
-                        <th>Questions</th>
+                        <th>Quiz</th>
+                        <th>Difficulty</th>
                         <th width="150">Action</th>
                     </tr>
                 </thead>
@@ -22,6 +23,7 @@
                       <td>{{ $quiz->id }}</td>
                       <td>{{ $quiz->quiz->subject->name }}</td>
                       <td>{{ $quiz->quiz->name }}</td>
+                      <td>{{ $quiz->quiz->difficulty }}</td>
                       @if($quiz->result?->marks)
                         <td><a class="table-action-button">({{ $quiz->result->marks }})</a></td>
                       @else
@@ -29,6 +31,9 @@
                       @endif
                     </tr>
                   @empty
+                    <tr>
+                        <td colspan="5" align="center">No Data Found</td>
+                    </tr>
                   @endforelse
                 </tbody>
             </table>
