@@ -14,7 +14,7 @@ class AddDifficultyToQuizTable extends Migration
     public function up()
     {
         Schema::table('quiz', function (Blueprint $table) {
-            $table->string('difficulty')->after('time');
+            $table->string('difficulty')->default('Easy')->after('time');
         });
     }
 
