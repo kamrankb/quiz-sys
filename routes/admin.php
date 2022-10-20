@@ -96,11 +96,13 @@ Route::middleware(['auth'])->group(function () {
     // Quiz
     Route::controller(QuizController::class)->group(function () {
         Route::get('/quiz/list', 'index')->name('quiz.list');
-        Route::get('/quiz/assign/list', 'index')->name('quiz.assign.list');
+        Route::get('/quiz/assign/list', 'assigned')->name('quiz.assign.list');
         Route::get('/quiz/trash', 'trashed')->name('quiz.list.trashed');
         Route::post('/quiz/detail/{isTrashed?}', 'view')->name('quiz.detail.view');
         Route::get('/quiz/restore/{id}', 'restore')->name('quiz.restore');
         Route::get('/quiz/add', 'create')->name('quiz.add');
+        Route::get('/quiz/assign/form/{quiz_id?}', 'assign_form')->name('quiz.assign.form');
+        Route::post('/quiz/assign/save', 'assign_store')->name('quiz.assign.save');
         Route::post('/quiz/save', 'store')->name('quiz.save');
         Route::get('/quiz/edit/{id}', 'edit')->name('quiz.edit');
         Route::post('/quiz/remove', 'delete')->name('quiz.remove');
