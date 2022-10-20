@@ -17,6 +17,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
+                    <h5>Quiz Assigned List</h5>
                     <h3>
                         @can('Subscriber-Create')
                             <h3>
@@ -27,16 +28,15 @@
                         @endcan
                     </h3>
                     <hr>
-                    <table id="subject" class="table table-bordered table-condensed table-striped"
+                    <table id="assigned_list" class="table table-bordered table-condensed table-striped"
                         style="font-size: small;">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Subject</th>
-                                <th>Name</th>
-                                <th>Questions</th>
+                                <th>Student</th>
+                                <th>Quiz</th>
+                                <th>Result</th>
                                 <th>Status</th>
-                                <th width="15%">Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -61,8 +61,8 @@
                 btnUpdate = $('.btn-update');
                 btnView = $('.btn-view');
 
-            var table = $('#subject').DataTable({
-                ajax: route('quiz.list'),
+            var table = $('#assigned_list').DataTable({
+                ajax: route('quiz.assign.list'),
                 serverSide: true,
                 processing: true,
                 aaSorting: [
@@ -74,25 +74,21 @@
                         name: 'id'
                     },
                     {
-                        data: 'subject.name',
-                        name: 'subject'
+                        data: 'student',
+                        name: 'student'
                     },
                     {
-                        data: 'name',
-                        name: 'name'
+                        data: 'quiz',
+                        name: 'quiz'
                     },
                     {
-                        data: 'questions',
-                        name: 'questions'
+                        data: 'result',
+                        name: 'result'
                     },
                     {
                         data: 'status',
                         name: 'status'
-                    },
-                    {
-                        data: 'action',
-                        name: 'action'
-                    },
+                    }
                 ],
                 'createdRow': function(row, data) {
                     $(row).attr('id', data.id)
