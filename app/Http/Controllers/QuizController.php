@@ -42,7 +42,7 @@ class QuizController extends Controller
             return DataTables::of($quizes)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $html = '<button href="#"  class="btn btn-primary btn-view"  data-bs-toggle="modal" data-bs-target=".orderdetailsModal" data-id="' . $row->id . '"><i class="far fa-eye"></i></button>&nbsp';
+                    $html = '<button href="#"  class="btn btn-primary btn-view"  data-bs-toggle="modal" data-bs-target=".orderdetailsModal" data-id="' . $row->id . '"><i class="far fa-eye"></i></button>&nbsp; <a href="'.route('quiz.assign.form', $row->id).'" class="btn btn-primary btn-view"><i class="bx bx-user"></i></a>';
                    
                     return $html;
                 })->addColumn('created_at', function ($row) {
@@ -51,18 +51,51 @@ class QuizController extends Controller
                     $btn = '<div class="square-switch"><input type="checkbox" id="switch' . $row->id . '" class="banner_status" switch="bool" data-id="' . $row->id . '" value="' . ($row->active == 1 ? "1" : "0") . '" ' . ($row->active == 1 ? "checked" : "") . '/><label for="switch' . $row->id . '" data-on-label="Yes" data-off-label="No"></label></div>';
 
                     return $btn;
-                })->addColumn('image', function ($row) {
-                    $imageName = Str::of($row->image)->replace(' ', '%10');
-                    if ($row->image) {
-                        $image = '<img src=' . asset('/' . $imageName) . ' class="avatar-sm" />';
-                    } else {
-                        $image = '<img src=' . asset('backend/assets/img/users/no-image.jpg') . ' class="avatar-sm" />';
-                    }
-                    return $image;
-                })->rawColumns(['action', 'status', 'image', 'created_at'])->make(true);
+                })->rawColumns(['action', 'status', 'created_at'])->make(true);
         }
 
         return view('admin.quizes.list');
+    }
+
+    public function assign_form(Request $request, $quiz_id="")
+    {
+        $students = User::role('Student')->select('id', 'first_name', 'last_name')->get();
+        $quizes = QuizModel::select('id', 'name')->get();
+        return view('admin.quizes.assignStudent', compact('students', 'quizes', 'quiz_id'));
+    }
+    
+    public function assigned(Request $request)
+    {
+        if ($request->ajax()) {
+            if(Auth::user()->hasRole('Teacher')) {
+                $assigned_quizes = QuizStudentModel::where('created_by', Auth::user()->id)->with('quiz:id,name', 'student:id,first_name,last_name,email', 'result:id,correct_answers,total_questions');
+            } else {
+                $assigned_quizes = QuizStudentModel::with('quiz:id,name', 'student:id,first_name,last_name,email', 'result:id,correct_answers,total_questions');
+            }
+            return DataTables::of($assigned_quizes)
+                ->addIndexColumn()
+                ->addColumn('student', function ($row) {
+                    return $row->student->first_name." ".$row->student->last_name;
+                })->addColumn('quiz', function ($row) {
+                    return $row->quiz->name;
+                })->addColumn('quiz', function ($row) {
+                    return $row->quiz->name;
+                })->addColumn('result', function ($row) {
+                    if($row->result?->correct_answers) {
+                        return $row->result->correct_answers." / ".$row->result->total_questions;
+                    }
+                    return "";
+                })->addColumn('created_at', function ($row) {
+                    return date('d-M-Y', strtotime($row->created_at)) . '<br /> <label class="text-primary">' . Carbon::parse($row->created_at)->diffForHumans() . '</label>';
+                })->addColumn('status', function ($row) {
+                    if($row->result?->correct_answers) {
+                        return "Attempted";
+                    }
+                    return "Not Attempted Yet.";
+                })->rawColumns(['status', 'created_at'])->make(true);
+        }
+
+        return view('admin.quizes.assignList');
     }
 
     /**
@@ -142,10 +175,10 @@ class QuizController extends Controller
                 Session::flash('success', $data["message"]);
             } else {
                 $data["success"] = false;
-                $data["message"] = "Subject Not Added Successfully.";
+                $data["message"] = "Quiz Not Added Successfully.";
                 Session::flash('error', $data["message"]);
             }
-            return redirect()->route('subject.list')->with($data);
+            return redirect()->route('quiz.list')->with($data);
         } else {
             $data["success"] = false;
             $data["message"] = "Validation failed.";
@@ -154,6 +187,49 @@ class QuizController extends Controller
         }
     }
 
+    public function assign_store(Request $request) {
+        $valid =  $request->validate([
+            'quiz' => 'required',
+            'student' => 'required',
+        ]);
+
+        if ($valid) {
+            $quiz = new QuizStudentModel();
+            $quiz->quiz_id = $request->input('quiz');
+            $quiz->student_id = $request->input('student');
+            $quiz->created_by = Auth::user()->id;
+
+            $management = User::role(['Admin', 'Teacher'])->get();
+            $management->pluck('id');
+            $data = array(
+                "success" => true,
+                "message" => "Quiz Assigned Successfully"
+            );
+
+            if ($quiz->save()) {
+                $notify = array(
+                    "performed_by" => Auth::user()->id,
+                    "title" => "Added New Subject",
+                    "desc" => array(
+                        "added_title" => $request->input('name'),
+                        "added_description" => $request->message,
+                    )
+                );
+                //Notification::send($management, new QuickNotify($notify));
+                Session::flash('success', $data["message"]);
+            } else {
+                $data["success"] = false;
+                $data["message"] = "Quiz Not Assigned Successfully.";
+                Session::flash('error', $data["message"]);
+            }
+            return redirect()->route('quiz.assign.list')->with($data);
+        } else {
+            $data["success"] = false;
+            $data["message"] = "Validation failed.";
+            Session::flash('error', $data["message"]);
+            return redirect()->back()->with($data);
+        }
+    }
     /**
      * Display the specified resource.
      *
