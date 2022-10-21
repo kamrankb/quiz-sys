@@ -42,7 +42,7 @@ class QuizController extends Controller
             return DataTables::of($quizes)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $html = '<button href="#"  class="btn btn-primary btn-view"  data-bs-toggle="modal" data-bs-target=".orderdetailsModal" data-id="' . $row->id . '"><i class="far fa-eye"></i></button>&nbsp; <a href="'.route('quiz.assign.form', $row->id).'" class="btn btn-primary btn-view"><i class="bx bx-user"></i></a>';
+                    $html = '<button href="#"  class="btn btn-primary btn-view"  data-bs-toggle="modal" data-bs-target=".orderdetailsModal" data-id="' . $row->id . '"><i class="far fa-eye"></i></button>&nbsp; <a href="'.route('quiz.assign.form', $row->id).'" class="btn btn-primary btn-view"><i class="bx bx-user"></i></a>&nbsp; <a data-id="'.$row->id.'" class="btn btn-danger btn-view remove"><i class="bx bx-trash"></i></a>';
                    
                     return $html;
                 })->addColumn('created_at', function ($row) {
@@ -293,9 +293,9 @@ class QuizController extends Controller
 
     public function quiz_submit(Request $request, $quiz_assign_id) {
         //$quizUpdate = QuizModel::where('id', $quiz_assign_id)->update(['status' => 2]);
-        $quizUpdate = QuizStudentModel::where('quiz_id', $quiz_assign_id)->update(['status' => 2]);
+        try {
+            $quizUpdate = QuizStudentModel::where('id', $quiz_assign_id)->update(['status' => 2]);
         
-        if($quizUpdate) {
             $result = new QuizResultModel();
             $result->quiz_assign_id = $quiz_assign_id;
             $result->quiz_id = $request->quiz_id;
@@ -312,8 +312,27 @@ class QuizController extends Controller
             } else {
                 return response()->json(["status" => false, "message" => "Not saved successfully."]);
             }
+        } catch(\Illuminate\Database\QueryException $e) {
+            return response()->json(["status" => false, "message" => $e->getMessage()]);
+        }
+    }
+
+    public function removeQuiz(Request $request)
+    {
+        $quiz = QuizModel::where('id', $request->id)->delete();
+
+        if ($quiz) {
+            $notification['type'] = "success";
+            $notification['message'] = "Quiz Moved to Trash Successfully!.";
+            $notification['icon'] = 'mdi-check-all';
+
+            echo json_encode($notification);
         } else {
-            return response()->json(["status" => false, "message" => "Not saved successfully."]);
+            $notification['type'] = "danger";
+            $notification['message'] = "Failed to Remove Quiz, please try again.";
+            $notification['icon'] = 'mdi-block-helper';
+
+            echo json_encode($notification);
         }
     }
 }
