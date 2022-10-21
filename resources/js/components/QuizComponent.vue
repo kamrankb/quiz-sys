@@ -160,7 +160,7 @@ export default {
         this.currentQuestion = null;
         this.quiz.data.quiz.q_questions = null;
 
-        alert(this.checkCorrectAnswers(this.userAnswers));
+        //alert(this.checkCorrectAnswers(this.userAnswers));
         
         const formData = new FormData();
           formData.append('quiz_id', this.quiz.data.quiz_id);
