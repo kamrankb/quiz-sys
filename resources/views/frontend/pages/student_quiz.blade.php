@@ -21,9 +21,9 @@
                   @forelse($quizes as $quiz)
                     <tr>
                       <td>{{ $quiz->id }}</td>
-                      <td>{{ $quiz->quiz->subject->name }}</td>
-                      <td>{{ $quiz->quiz->name }}</td>
-                      <td>{{ $quiz->quiz->difficulty }}</td>
+                      <td>{{ $quiz->quiz?->subject->name }}</td>
+                      <td>{{ $quiz->quiz?->name }}</td>
+                      <td>{{ $quiz->quiz?->difficulty }}</td>
                       @if($quiz->result?->marks)
                         <td><a class="table-action-button">({{ $quiz->result->marks }})</a></td>
                       @else

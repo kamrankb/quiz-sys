@@ -17,12 +17,14 @@
 
         @routes                    
     </head>
-<body id="app">
-    <section class="panel-conatainer">
-      <Quiz-Component></Quiz-Component>
-    </section>
+<body>
+    <div id="app">
+        <section class="panel-conatainer">
+        <Quiz-Component></Quiz-Component>
+        </section>
+    </div>
 
-    <script src="{{ mix('js/app.js') }}"></script>
+    <script src="{{ asset(mix('js/app.js')) }}"></script>
 
     @stack('customScripts')
 </body>
