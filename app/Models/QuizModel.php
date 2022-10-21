@@ -12,6 +12,8 @@ class QuizModel extends Model
     use HasFactory,HasRoles,SoftDeletes;
     
     protected $table = 'quiz';
+    protected $fillable = ['subject_id','name', 'questions', 'time', 'difficulty', 'other', 'created_by', 'status'];
+
 
     public function subject(){
         return $this->belongsTo(Subjects::class, 'subject_id', 'id');
