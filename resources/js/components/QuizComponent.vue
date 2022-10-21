@@ -168,7 +168,7 @@ export default {
           formData.append('total_questions', this.totalQuestion);
           formData.append('marks', this.checkCorrectAnswers(this.userAnswers));
           formData.append('data', this.userAnswers);
-
+          
           let submission = await axios({
               method: "post",
               url: route('front.quiz.quiz_submit', this.quiz.data.id),
@@ -189,7 +189,7 @@ export default {
           if(this.currentQuestion == (this.totalQuestion-1)) {
             this.answer.status = await this.checkAnswer(this.currentQuestion, this.answer.answer);
             this.userAnswers.push({...this.answer});
-            this.quizSubmit();
+            return this.quizSubmit();
           }
           this.answer.status = await this.checkAnswer(this.currentQuestion, this.answer.answer);
           this.userAnswers.push({...this.answer});
@@ -216,11 +216,13 @@ export default {
 
       checkCorrectAnswers(answers) {
         let correctAnswers = 0;
-        answers.forEach(function(value, index, array) {
-          if(value.status) {
-            correctAnswers++;
-          }
-        });
+        if(answers) {
+          answers.forEach(function(value, index, array) {
+            if(value.status) {
+              correctAnswers++;
+            }
+          });
+        }
 
         return correctAnswers;
       },
