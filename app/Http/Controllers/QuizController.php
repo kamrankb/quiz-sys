@@ -136,6 +136,7 @@ class QuizController extends Controller
             $quiz->subject_id = $request->input('subject');
             $quiz->name = $request->input('name');
             $quiz->questions = $request->input('question_number');
+            $quiz->difficulty = $request->input('difficulty');
             $quiz->time = $request->input('time_limit');
             $quiz->created_by = Auth::user()->id;
 
@@ -291,19 +292,26 @@ class QuizController extends Controller
     }
 
     public function quiz_submit(Request $request, $quiz_assign_id) {
-        $result = new QuizResultModel();
-        $result->quiz_assign_id = $quiz_assign_id;
-        $result->quiz_id = $request->quiz_id;
-        $result->student_id = Auth::user()->id;
-        $result->correct_answers = $request->correct_answers;
-        $result->total_questions = $request->total_questions;
-        $result->marks = $request->marks;
-        $result->data = $request->data;
-        $result->created_by = Auth::user()->id;
-        $result->status = 1;
-
-        if($result->save()) {
-            return response()->json(["status"=> true, "message"=> "Saved successfully."]);
+        $quizUpdate = QuizModel::where('id', $quiz_assign_id)->update(['status' => 2]);
+        $quizUpdate = QuizStudentModel::where('quiz_id', $quiz_assign_id)->update(['status' => 2]);
+        
+        if($quizUpdate) {
+            $result = new QuizResultModel();
+            $result->quiz_assign_id = $quiz_assign_id;
+            $result->quiz_id = $request->quiz_id;
+            $result->student_id = Auth::user()->id;
+            $result->correct_answers = $request->correct_answers;
+            $result->total_questions = $request->total_questions;
+            $result->marks = $request->marks;
+            $result->data = $request->data;
+            $result->created_by = Auth::user()->id;
+            $result->status = 1;
+    
+            if($result->save()) {
+                return response()->json(["status"=> true, "message"=> "Saved successfully."]);
+            } else {
+                return response()->json(["status" => false, "message" => "Not saved successfully."]);
+            }
         } else {
             return response()->json(["status" => false, "message" => "Not saved successfully."]);
         }
