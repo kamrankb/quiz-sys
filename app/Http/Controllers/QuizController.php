@@ -292,7 +292,7 @@ class QuizController extends Controller
     }
 
     public function quiz_submit(Request $request, $quiz_assign_id) {
-        $quizUpdate = QuizModel::where('id', $quiz_assign_id)->update(['status' => 2]);
+        //$quizUpdate = QuizModel::where('id', $quiz_assign_id)->update(['status' => 2]);
         $quizUpdate = QuizStudentModel::where('quiz_id', $quiz_assign_id)->update(['status' => 2]);
         
         if($quizUpdate) {
