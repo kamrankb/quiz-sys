@@ -191,7 +191,7 @@ export default {
           }
           this.answer.status = await this.checkAnswer(this.currentQuestion, this.answer.answer);
           this.userAnswers.push({...this.answer});
-          
+          console.log(this.userAnswers);
           this.answer.answer = null;
           this.currentQuestion++;
           this.currentTimeLeft = this.timePerQuestion;
