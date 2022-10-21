@@ -68,9 +68,9 @@ class QuizController extends Controller
     {
         if ($request->ajax()) {
             if(Auth::user()->hasRole('Teacher')) {
-                $assigned_quizes = QuizStudentModel::where('created_by', Auth::user()->id)->with('quiz:id,name', 'student:id,first_name,last_name,email', 'result:id,correct_answers,total_questions');
+                $assigned_quizes = QuizStudentModel::where('created_by', Auth::user()->id)->with('quiz:id,name', 'student:id,first_name,last_name,email', 'result');
             } else {
-                $assigned_quizes = QuizStudentModel::with('quiz:id,name', 'student:id,first_name,last_name,email', 'result:id,correct_answers,total_questions');
+                $assigned_quizes = QuizStudentModel::with('quiz:id,name', 'student:id,first_name,last_name,email', 'result');
             }
             return DataTables::of($assigned_quizes)
                 ->addIndexColumn()

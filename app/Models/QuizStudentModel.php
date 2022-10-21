@@ -23,6 +23,6 @@ class QuizStudentModel extends Model
     }
 
     public function result() {
-        return $this->belongsTo(QuizResultModel::class, 'student_id', 'student_id');
+        return $this->belongsTo(QuizResultModel::class, 'id', 'quiz_assign_id');
     }
 }

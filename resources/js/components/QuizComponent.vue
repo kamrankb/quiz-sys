@@ -187,11 +187,12 @@ export default {
       async nextQuestion(pass) {
         if(this.answer.answer || pass=='pass') {
           if(this.currentQuestion == (this.totalQuestion-1)) {
+            this.answer.status = await this.checkAnswer(this.currentQuestion, this.answer.answer);
+            this.userAnswers.push({...this.answer});
             this.quizSubmit();
           }
           this.answer.status = await this.checkAnswer(this.currentQuestion, this.answer.answer);
           this.userAnswers.push({...this.answer});
-          console.log(this.userAnswers);
           this.answer.answer = null;
           this.currentQuestion++;
           this.currentTimeLeft = this.timePerQuestion;
