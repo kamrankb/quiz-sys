@@ -208,11 +208,7 @@
             });
 
             // delete ajax
-            $(document).on('click', '.btn-delete', function() {
-
-                var formData = form.serialize();
-
-                var updateId = form.find('input[name="id"]').val();
+            $(document).on('click', '.remove', function() {
                 var id = $(this).data('id')
                 var el = $(this)
                 Swal.fire({

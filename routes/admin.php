@@ -105,7 +105,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/quiz/assign/save', 'assign_store')->name('quiz.assign.save');
         Route::post('/quiz/save', 'store')->name('quiz.save');
         Route::get('/quiz/edit/{id}', 'edit')->name('quiz.edit');
-        Route::post('/quiz/remove', 'delete')->name('quiz.remove');
+        Route::post('/quiz/remove', 'removeQuiz')->name('quiz.remove');
         Route::get('/quiz/view/', 'view')->name('quiz.view');
         Route::post('/quiz/update', 'update')->name('quiz.update');
         Route::post('/quiz/delete', 'destroy')->name('quiz.delete');
