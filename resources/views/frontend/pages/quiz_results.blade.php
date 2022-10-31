@@ -19,13 +19,14 @@
                     </tr>
                 </thead>
                 <tbody>
+                  
                   @forelse($quizes as $quiz)
                     <tr>
                         <td>{{ $quiz->id }}</td>
-                        <td>{{ $quiz->quiz->subject->name }}</td>
-                        <td>{{ $quiz->quiz->name }}</td>
-                        <td>{{ $quiz->quiz->difficulty }}</td>
-                        <td>{{ $quiz->quiz->questions }}</td>
+                        <td>{{ $quiz->quiz?->subject?->name }}</td>
+                        <td>{{ $quiz->quiz?->name }}</td>
+                        <td>{{ $quiz->quiz?->difficulty }}</td>
+                        <td>{{ $quiz->quiz?->questions }}</td>
                         <td><a class="table-action-button">{{ $quiz->marks }}</a></td>
                     </tr>
                   @empty
